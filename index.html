@@ -6,6 +6,8 @@
     <title>DeoVault ID - Payment & Information</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* [SEMUA KODE CSS LENGKAP DARI VERSI SEBELUMNYA ADA DI SINI] */
+
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         html {
@@ -21,7 +23,7 @@
             transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
             background-color: #080808; /* Default Dark Mode */
             color: white;
-            overflow-x: hidden; /* Mencegah overflow horizontal */
+            overflow-x: hidden;
         }
 
         /* LIGHT MODE STYLES */
@@ -36,12 +38,12 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .light-mode .neon-gradient-bg::before {
-            background: radial-gradient(circle at top right, rgba(255, 99, 71, 0.1) 0%, transparent 50%), /* light red */
-                        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.2) 0%, transparent 50%); /* light white */
+            background: radial-gradient(circle at top right, rgba(255, 99, 71, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
             opacity: 0.3; 
         }
         .light-mode .profile-card, 
-        .light-mode .content-box { /* Menambahkan content-box */
+        .light-mode .content-box { 
             background: white;
             border: 1px solid #e5e7eb;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -50,10 +52,13 @@
             background: #ffffff;
             border: 1px solid #e5e7eb;
         }
+        .light-mode .contact-icon-img {
+            filter: grayscale(10%); 
+        }
 
         /* DARK MODE STYLES (Neon Merah & Putih) */
         .neon-gradient-bg {
-            background: linear-gradient(135deg, #1A0C0C 0%, #080808 100%); /* Reddish dark background */
+            background: linear-gradient(135deg, #1A0C0C 0%, #080808 100%);
             position: relative;
             overflow: hidden;
         }
@@ -64,8 +69,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at top right, rgba(255, 0, 0, 0.4) 0%, transparent 50%), /* Red neon */
-                        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.2) 0%, transparent 50%); /* White neon */
+            background: radial-gradient(circle at top right, rgba(255, 0, 0, 0.4) 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
             animation: gradient-shift 15s ease infinite alternate;
             opacity: 0.5;
             z-index: 0;
@@ -74,10 +79,10 @@
         .profile-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 0, 0.2); /* Border merah neon */
+            border: 1px solid rgba(255, 0, 0, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .content-box { /* Latar belakang untuk halaman Payment dan Contact */
+        .content-box { 
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -88,28 +93,24 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
         
-        /* Neon Button (Merah & Putih) */
         .neon-button-red {
-            background: linear-gradient(90deg, #FF6347, #FF0000); /* Merah terang ke merah gelap */
+            background: linear-gradient(90deg, #FF6347, #FF0000);
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
             color: white;
             transition: box-shadow 0.2s, background 0.2s; 
         }
         .neon-button-white {
-            background: linear-gradient(90deg, #FFFFFF, #F0F0F0); /* Putih */
+            background: linear-gradient(90deg, #FFFFFF, #F0F0F0);
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-            color: #1f2937; /* Teks gelap di tombol putih */
+            color: #1f2937;
             transition: box-shadow 0.2s, background 0.2s; 
         }
-
-        /* Tombol Kembali (Red Neon) */
         .back-button {
             background: linear-gradient(45deg, #FF6347, #FF0000);
             box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
             color: white;
             transition: box-shadow 0.2s, background 0.2s;
         }
-        /* Tombol Salin (Teks Sederhana) */
         .copy-button {
             background-color: transparent !important; 
             padding: 0.5rem 0; 
@@ -118,40 +119,17 @@
             font-weight: 600;
             box-shadow: none;
             transition: color 0.2s;
-            color: #d1d5db; /* Default dark mode color */
+            color: #d1d5db;
         }
         .copy-button:hover {
-            color: #FF6347; /* Hover merah neon */
+            color: #FF6347;
         }
 
-        /* Light Mode specific colors */
-        .light-mode .text-primary-neon {
-            color: #FF0000 !important; /* Merah neon di light mode */
-        }
-        .light-mode .text-secondary-neon {
-            color: #1f2937 !important; /* Dark text in light mode */
-        }
-        .light-mode .dark-text {
+        .light-mode .dark-text, .light-mode .neon-button-red, .light-mode .back-button {
             color: #1f2937 !important; 
         }
-        .light-mode .profile-card .text-white, 
-        .light-mode .profile-card h1, 
-        .light-mode .profile-card h2 {
-            color: #1f2937 !important; 
-        }
-        .light-mode .profile-card p,
-        .light-mode .text-gray-400 {
-            color: #4b5563 !important;
-        }
-        .light-mode .back-button {
-            color: white !important; /* Tombol kembali tetap putih */
-        }
-        .light-mode .contact-button {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-        }
-        .light-mode .contact-button span {
-             color: #1f2937; /* Text in light mode */
+        .light-mode .neon-button-white {
+            color: #1f2937;
         }
         .light-mode .copy-button {
             color: #6b7280; 
@@ -160,9 +138,8 @@
             color: #FF0000;
         }
 
-
         .contact-icon-img {
-            width: 2.5rem; /* Ukuran icon sedikit lebih besar */
+            width: 2.5rem; 
             height: 2.5rem;
             object-fit: contain;
             border-radius: 0.75rem;
@@ -170,10 +147,9 @@
         .avatar-img {
             border-radius: 50%;
             border: 4px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* Shadow merah neon */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
         }
 
-        /* Styling untuk Audio Player */
         .audio-player-container {
             position: fixed;
             bottom: 1rem;
@@ -205,9 +181,6 @@
         .light-mode .audio-player-container button {
             color: #1f2937;
         }
-        .audio-player-container button:hover {
-            color: #FF6347;
-        }
         .audio-player-container input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
@@ -223,13 +196,10 @@
             appearance: none;
             width: 1rem;
             height: 1rem;
-            background: #FF0000; /* Merah neon */
+            background: #FF0000;
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
-        }
-        .light-mode .audio-player-container input[type="range"]::-webkit-slider-thumb {
-             background: #FF0000;
         }
         .track-info {
             color: #ccc;
@@ -272,7 +242,7 @@
     <div class="audio-player-container">
         <audio id="background-music" loop>
             <source src="https://www.bensound.com/bensound-music/bensound-retrosoul.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
+            Browser Anda tidak mendukung elemen audio.
         </audio>
         <button id="play-pause-btn" aria-label="Play/Pause">
             <svg id="play-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
@@ -282,189 +252,7 @@
         <span class="track-info">RetroSoul - Bensound.com</span>
     </div>
 
-
-    <script>
-        // --- DATA KONSTANTA ---
-        const AVATAR_URL = 'https://i.supaimg.com/2e874c84-c8ca-4be6-9f89-00adbcebe4f5.png';
-        const DANA_NUMBER = '087731994269'; 
-        const DANA_ICON_URL = 'https://i.supaimg.com/20819a22-ee60-49ed-bdf1-58536467f5d4.jpg'; 
-        const WA_ICON_URL = 'https://i.supaimg.com/a58841b8-fa21-4c3b-b219-1e8bd22080b3.jpg';
-        const TG_ICON_URL = 'https://i.supaimg.com/00182d53-21f3-4c3d-82cf-5b5b497f30ff.jpg';
-
-        const CONTACT_DATA = {
-            'Saluran WA': { url: 'https://whatsapp.com/channel/0029VbBVqDO3rZZbiIcmEs0q', icon: WA_ICON_URL },
-            'Telegram': { url: 'https://t.me/DeoVaultID', icon: TG_ICON_URL }
-        };
-
-        // --- VARIABEL GLOBAL ---
-        let currentPage = 'home';
-        const contentArea = document.getElementById('content-area');
-        const themeToggle = document.getElementById('theme-toggle');
-        const moonIcon = document.getElementById('moon-icon');
-        const sunIcon = document.getElementById('sun-icon');
+    <script src="script.js"></script>
+</body>
+                                                                                                                                                                                                                                                        </html>
         
-        // --- AUDIO PLAYER ELEMENTS ---
-        const backgroundMusic = document.getElementById('background-music');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const playIcon = document.getElementById('play-icon');
-        const pauseIcon = document.getElementById('pause-icon');
-        const volumeSlider = document.getElementById('volume-slider');
-
-
-        // --- DEFINISI TEMPLATE ---
-
-        const homeTemplate = `
-            <div class="flex flex-col items-center mb-10 mt-2">
-                <div class="w-24 h-24 rounded-full overflow-hidden mb-4 avatar-img">
-                    <img id="avatar-img" src="${AVATAR_URL}" alt="Avatar DeoVault ID" class="w-full h-full object-cover" 
-                        onerror="this.onerror=null; this.src='https://placehold.co/96x96/FF0000/FFF?text=ID';" />
-                </div>
-                
-                <div class="profile-card p-6 rounded-3xl text-center transition duration-300">
-                    <h1 class="text-4xl font-extrabold text-white mb-2 transition duration-300">
-                        DeoVault ID
-                    </h1>
-                    <h2 class="text-xl font-semibold text-red-400 mb-4 transition duration-300 text-primary-neon">
-                        Pusat Transaksi & Informasi Resmi
-                    </h2>
-                    <p class="text-gray-400 text-sm max-w-xs mx-auto transition duration-300">
-                        Selamat datang di layanan premium. Pilih Payment Menu untuk memulai transaksi Anda.
-                    </p>
-                </div>
-            </div>
-
-            <div class="space-y-4">
-                <button data-page="payment" class="neon-button-red w-full py-4 text-lg font-semibold rounded-2xl" onclick="navigate('payment')">
-                    Payment Menu
-                </button>
-                <button data-page="contact" class="neon-button-white w-full py-4 text-lg font-semibold rounded-2xl mt-6" onclick="navigate('contact')">
-                    Other Information
-                </button>
-            </div>
-        `;
-
-        const paymentTemplate = `
-            <div class="content-box p-6 rounded-3xl text-center w-full transition duration-300 mb-6">
-                <button class="back-button py-2 px-4 font-semibold rounded-full mb-8 shadow-md" onclick="navigate('home')">
-                    Kembali
-                </button>
-
-                <div class="flex flex-col items-center">
-                    <h1 class="text-2xl font-bold text-white mb-6 transition duration-300 text-primary-neon">Pilihan Pembayaran</h1>
-                    
-                    <h2 class="text-xl font-bold text-red-400 mb-4 transition duration-300 text-secondary-neon">E-Wallet Transfer</h2>
-                    
-                    <div class="space-y-4 w-full">
-                        ${createPaymentCard('DANA', DANA_NUMBER, DANA_ICON_URL)}
-                    </div>
-                </div>
-            </div>
-        `;
-
-        const contactTemplate = `
-            <div class="content-box p-6 rounded-3xl text-center w-full transition duration-300 mb-6">
-                <button class="back-button py-2 px-4 font-semibold rounded-full mb-8 shadow-md" onclick="navigate('home')">
-                    Kembali
-                </button>
-
-                <div class="flex flex-col items-center">
-                    <h1 class="text-2xl font-bold text-white mb-8 transition duration-300 text-primary-neon">Informasi dan Dukungan</h1>
-                    
-                    <div class="grid grid-cols-2 gap-4 w-full">
-                        ${createContactButton('Saluran WA', CONTACT_DATA['Saluran WA'].icon, CONTACT_DATA['Saluran WA'].url)}
-                        ${createContactButton('Telegram', CONTACT_DATA['Telegram'].icon, CONTACT_DATA['Telegram'].url)}
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // --- FUNGSI UTILITY ---
-
-        function createPaymentCard(name, number, iconUrl) {
-            const id = name.toLowerCase().replace(' ', '');
-
-            return `
-                <div class="payment-card p-4 rounded-3xl flex items-center justify-between transition duration-300">
-                    <div class="flex items-center">
-                        <img src="${iconUrl}" alt="${name} Icon" class="w-12 h-12 rounded-xl mr-4 object-cover">
-                        <div class="flex flex-col justify-center">
-                            <p class="text-lg text-white font-semibold transition duration-300 dark-text">${name}</p>
-                            <span id="${id}-number" class="text-gray-400 text-base transition duration-300">${number}</span>
-                        </div>
-                    </div>
-                    <button class="copy-button font-semibold transition duration-300" data-target="${id}-number" onclick="copyToClipboard(event)">
-                        Salin
-                    </button>
-                </div>
-            `;
-        }
-
-        function createContactButton(name, iconUrl, linkUrl) {
-            return `
-                <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="contact-button w-full flex flex-col items-center justify-center p-6 rounded-2xl shadow-xl transition duration-300 space-y-2">
-                    <img src="${iconUrl}" alt="${name} Icon" class="contact-icon-img" />
-                    <span class="text-white text-sm font-medium transition duration-300 dark-text">${name}</span>
-                </a>
-            `;
-        }
-
-        function navigate(page) {
-            currentPage = page;
-            contentArea.innerHTML = getTemplate(page); 
-            
-            // Apply theme styles after content is loaded
-            if (document.documentElement.classList.contains('light-mode')) {
-                applyLightModeStyles();
-            } else {
-                applyDarkModeStyles();
-            }
-        }
-
-        function getTemplate(page) {
-            switch (page) {
-                case 'payment':
-                    return paymentTemplate;
-                case 'contact':
-                    return contactTemplate;
-                case 'home':
-                default:
-                    return homeTemplate;
-            }
-        }
-
-        function copyToClipboard(e) {
-            const button = e.currentTarget;
-            const targetId = button.getAttribute('data-target');
-            const targetElement = document.getElementById(targetId);
-            const originalText = 'Salin'; 
-
-            if (targetElement) {
-                const textToCopy = targetElement.textContent;
-                button.disabled = true;
-
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    button.textContent = 'Disalin'; 
-                    button.style.color = '#3b82f6'; // Biru untuk disalin
-                    
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                        button.style.color = ''; // Kembali ke warna default (Dark/Light mode CSS)
-                        button.disabled = false;
-                    }, 1500);
-                }).catch(err => {
-                    console.error('Gagal menyalin: ', err);
-                    button.textContent = 'Gagal!';
-                    button.style.color = '#ef4444'; // Merah untuk gagal
-                    
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                        button.style.color = ''; 
-                        button.disabled = false;
-                    }, 1500);
-                });
-            }
-        }
-        
-        // --- LOGIKA DARK/LIGHT MODE ---
-        
-   
