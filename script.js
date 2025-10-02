@@ -1,29 +1,18 @@
 // --- DATA KONSTANTA ---
-const AVATAR_URL = 'https://i.supaimg.com/2e874c84-c8ca-4be6-9f89-00adbcebe4f5.png';
+const AVATAR_URL = 'https://i.supaimg.com/cf39d2bc-f804-4773-8db2-2641a39b4a56.png';
 const DANA_NUMBER = '087731994269'; 
 const DANA_ICON_URL = 'https://i.supaimg.com/20819a22-ee60-49ed-bdf1-58536467f5d4.jpg'; 
 const WA_ICON_URL = 'https://i.supaimg.com/a58841b8-fa21-4c3b-b219-1e8bd22080b3.jpg';
 const TG_ICON_URL = 'https://i.supaimg.com/00182d53-21f3-4c3d-82cf-5b5b497f30ff.jpg';
 
-const PRODUCTS = {
-    'ALIGHT MOTION 1 Years': {
-        price: '10.000',
-        link: 'https://t.me/DeoVaultID'
-    },
-    'Reseller Script Kayzen': {
-        price: '35.000',
-        link: 'https://t.me/DeoVaultID'
-    }
-};
 const CONTACT_DATA = {
     'Saluran WA': { url: 'https://whatsapp.com/channel/0029VbBVqDO3rZZbiIcmEs0q', icon: WA_ICON_URL },
     'Telegram': { url: 'https://t.me/DeoVaultID', icon: TG_ICON_URL }
 };
 
 // --- VARIABEL GLOBAL ---
-let currentPage = 'home';
-let contentArea;
-let themeToggle, moonIcon, sunIcon;
+let currentPage;
+let contentArea, themeToggle, moonIcon, sunIcon;
 let backgroundMusic, playPauseBtn, playIcon, pauseIcon, volumeSlider;
 
 
@@ -33,14 +22,14 @@ const homeTemplate = `
     <div class="flex flex-col items-center mb-10 mt-2">
         <div class="w-24 h-24 rounded-full overflow-hidden mb-4 avatar-img">
             <img id="avatar-img" src="${AVATAR_URL}" alt="Avatar DeoVault ID" class="w-full h-full object-cover" 
-                onerror="this.onerror=null; this.src='https://placehold.co/96x96/FF0000/FFF?text=ID';" />
+                onerror="this.onerror=null; this.src='https://placehold.co/96x96/FFD700/000?text=ID';" />
         </div>
         
         <div class="profile-card p-6 rounded-3xl text-center transition duration-300">
             <h1 class="text-4xl font-extrabold text-white mb-2 transition duration-300">
                 DeoVault ID
             </h1>
-            <h2 class="text-xl font-semibold text-red-400 mb-4 transition duration-300 text-primary-neon">
+            <h2 class="text-xl font-semibold text-cyan-400 mb-4 transition duration-300 text-primary-neon">
                 Pusat Transaksi & Informasi Resmi
             </h2>
             <p class="text-gray-400 text-sm max-w-xs mx-auto transition duration-300">
@@ -50,31 +39,12 @@ const homeTemplate = `
     </div>
 
     <div class="space-y-4">
-        <button data-page="payment" class="neon-button-red w-full py-4 text-lg font-semibold rounded-2xl" onclick="navigate('payment')">
+        <button data-page="payment" class="neon-button w-full py-4 text-white text-lg font-semibold rounded-2xl" onclick="navigate('payment')">
             Payment Menu
         </button>
-        <button data-page="product" class="neon-button-red w-full py-4 text-lg font-semibold rounded-2xl" onclick="navigate('product')">
-            List Produk
-        </button>
-        <button data-page="contact" class="neon-button-white w-full py-4 text-lg font-semibold rounded-2xl mt-6 dark-text" onclick="navigate('contact')">
+        <button data-page="contact" class="other-button w-full py-4 text-lg font-semibold rounded-2xl mt-6" onclick="navigate('contact')">
             Other Information
         </button>
-    </div>
-`;
-
-const productTemplate = `
-    <div class="content-box p-6 rounded-3xl text-center w-full transition duration-300 mb-6">
-        <button class="back-button py-2 px-4 font-semibold rounded-full mb-8 shadow-md" onclick="navigate('home')">
-            Kembali
-        </button>
-        <div class="flex flex-col items-center">
-            <h1 class="text-2xl font-bold text-white mb-6 transition duration-300 text-primary-neon">Daftar Produk Premium</h1>
-            
-            <div class="space-y-4 w-full">
-                ${createProductListItem('ALIGHT MOTION 1 Years', PRODUCTS['ALIGHT MOTION 1 Years'])}
-                ${createProductListItem('Reseller Script Kayzen', PRODUCTS['Reseller Script Kayzen'])}
-            </div>
-        </div>
     </div>
 `;
 
@@ -115,25 +85,6 @@ const contactTemplate = `
 
 // --- FUNGSI UTILITY ---
 
-function createProductListItem(name, product) {
-    return `
-        <div class="product-item-card p-4 rounded-3xl flex items-center justify-between transition duration-300 border-2 border-transparent hover:border-[#FF0000]">
-            <div class="flex items-center">
-                <div class="logo-placeholder w-12 h-12 rounded-2xl mr-4 bg-red-600 flex items-center justify-center text-white font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2zM12 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM12 4s-8 6-8 12h16s-8-6-8-12z" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="name-text text-white font-semibold dark-text">${name}</p>
-                    <p class="price-text font-bold text-red-400 dark-text">Rp ${product.price}</p>
-                </div>
-            </div>
-            <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="order-button px-4 py-2 rounded-2xl text-sm flex-shrink-0 bg-red-500 text-white hover:bg-red-600">Order Here</a>
-        </div>
-    `;
-}
-
 function createPaymentCard(name, number, iconUrl) {
     const id = name.toLowerCase().replace(' ', '');
 
@@ -166,6 +117,7 @@ function navigate(page) {
     currentPage = page;
     contentArea.innerHTML = getTemplate(page); 
     
+    // Apply theme styles after content is loaded
     if (document.documentElement.classList.contains('light-mode')) {
         applyLightModeStyles();
     } else {
@@ -175,8 +127,6 @@ function navigate(page) {
 
 function getTemplate(page) {
     switch (page) {
-        case 'product':
-            return productTemplate;
         case 'payment':
             return paymentTemplate;
         case 'contact':
@@ -199,7 +149,7 @@ function copyToClipboard(e) {
 
         navigator.clipboard.writeText(textToCopy).then(() => {
             button.textContent = 'Disalin'; 
-            button.style.color = '#3b82f6'; 
+            button.style.color = '#3b82f6'; // Biru untuk disalin
             
             setTimeout(() => {
                 button.textContent = originalText;
@@ -209,7 +159,7 @@ function copyToClipboard(e) {
         }).catch(err => {
             console.error('Gagal menyalin: ', err);
             button.textContent = 'Gagal!';
-            button.style.color = '#ef4444'; 
+            button.style.color = '#ef4444'; // Merah untuk gagal
             
             setTimeout(() => {
                 button.textContent = originalText;
@@ -224,24 +174,18 @@ function copyToClipboard(e) {
 
 function applyLightModeStyles() {
     const darkColor = '#1f2937'; 
-    const accentRed = '#FF0000';
+    const accentTeal = '#06B6D4'; 
     const mediumGray = '#4b5563';
 
     // Apply color to dynamic text
     document.querySelectorAll('#content-area h1').forEach(el => el.style.color = darkColor);
-    document.querySelectorAll('#content-area h2').forEach(el => el.style.color = accentRed);
-    document.querySelectorAll('.order-button').forEach(el => el.style.backgroundColor = accentRed);
+    document.querySelectorAll('#content-area h2').forEach(el => el.style.color = accentTeal);
     
-    document.querySelectorAll('.contact-button span, .payment-card p, .product-item-card p.name-text').forEach(el => el.style.color = darkColor);
-    document.querySelectorAll('.profile-card p, .product-list-card p.text-gray-400, [id$="-number"]').forEach(el => el.style.color = mediumGray);
-    document.querySelectorAll('.price-text').forEach(el => el.style.color = accentRed);
-
+    document.querySelectorAll('.contact-button span, .payment-card p.dark-text').forEach(el => el.style.color = darkColor);
+    document.querySelectorAll('.profile-card p, [id$="-number"]').forEach(el => el.style.color = mediumGray);
+    
     // Apply button specific styles
-    document.querySelectorAll('.neon-button-red, .neon-button-white, .back-button').forEach(el => {
-        el.style.color = darkColor; 
-    });
     document.querySelectorAll('.copy-button').forEach(el => el.style.color = '#6b7280');
-    document.querySelectorAll('.copy-button:hover').forEach(el => el.style.color = accentRed);
 }
 
 function applyDarkModeStyles() {
@@ -317,3 +261,4 @@ document.addEventListener('DOMContentLoaded', function() {
     playPauseBtn.addEventListener('click', togglePlayPause);
     volumeSlider.addEventListener('input', changeVolume);
 });
+    
