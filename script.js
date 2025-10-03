@@ -14,7 +14,6 @@ const CONTACT_DATA = {
 let currentPage;
 let contentArea, themeToggle, moonIcon, sunIcon;
 let backgroundMusic, playPauseBtn, playIcon, pauseIcon;
-let fileUploadInput; // Variabel baru untuk input file
 
 
 // --- DEFINISI TEMPLATE ---
@@ -187,6 +186,9 @@ function applyLightModeStyles() {
     
     // Apply button specific styles
     document.querySelectorAll('.copy-button').forEach(el => el.style.color = '#6b7280');
+    document.querySelectorAll('.neon-button, .other-button, .back-button').forEach(el => {
+        el.style.color = darkColor; 
+    });
 }
 
 function applyDarkModeStyles() {
@@ -209,15 +211,10 @@ function toggleTheme() {
     }
 }
 
-// --- AUDIO PLAYER FUNGSI & UPLOAD BARU ---
+// --- AUDIO PLAYER FUNGSI ---
 
 function togglePlayPause() {
     if (backgroundMusic.paused) {
-        // Cek jika lagu default tidak ada, jangan putar
-        if (!backgroundMusic.currentSrc) {
-            console.warn("Tidak ada sumber musik yang valid.");
-            return;
-        }
         backgroundMusic.play();
         playIcon.classList.add('hidden');
         pauseIcon.classList.remove('hidden');
@@ -225,37 +222,6 @@ function togglePlayPause() {
         backgroundMusic.pause();
         playIcon.classList.remove('hidden');
         pauseIcon.classList.add('hidden');
-    }
-}
-
-function handleFileUpload(event) {
-    const file = event.target.files[0];
-    
-    // Hanya proses jika file dipilih dan berjenis audio
-    if (file && file.type.startsWith('audio/')) {
-        // 1. Hentikan pemutaran yang sedang berjalan
-        if (!backgroundMusic.paused) {
-            backgroundMusic.pause();
-        }
-        
-        // 2. Buat URL objek untuk file lokal
-        const fileURL = URL.createObjectURL(file);
-        
-        // 3. Set sumber baru ke elemen audio
-        backgroundMusic.src = fileURL;
-        
-        // 4. Setelah sumber dimuat, putar otomatis
-        backgroundMusic.load(); // Memuat sumber audio baru
-        backgroundMusic.oncanplaythrough = () => {
-            backgroundMusic.play();
-            playIcon.classList.add('hidden');
-            pauseIcon.classList.remove('hidden');
-            backgroundMusic.oncanplaythrough = null; // Hapus event listener agar tidak terpicu lagi
-        };
-
-        alert(`Lagu "${file.name}" berhasil diunggah dan diputar!`);
-    } else if (file) {
-        alert("Gagal: File yang diunggah harus berupa file audio.");
     }
 }
 
@@ -272,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
     playPauseBtn = document.getElementById('play-pause-btn');
     playIcon = document.getElementById('play-icon');
     pauseIcon = document.getElementById('pause-icon');
-    fileUploadInput = document.getElementById('file-upload-input');
 
     // Setting volume ke nilai tetap 50%
     backgroundMusic.volume = 0.5;
@@ -295,6 +260,4 @@ document.addEventListener('DOMContentLoaded', function() {
     navigate('home');
     themeToggle.addEventListener('click', toggleTheme);
     playPauseBtn.addEventListener('click', togglePlayPause);
-    fileUploadInput.addEventListener('change', handleFileUpload);
 });
-                                      

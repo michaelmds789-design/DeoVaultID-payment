@@ -19,7 +19,7 @@
             padding: 0;
             box-sizing: border-box; 
             transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
-            background-color: #080808; /* Default Dark Mode */
+            background-color: #080808; 
             color: white;
             overflow-x: hidden;
         }
@@ -36,8 +36,8 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .light-mode .neon-gradient-bg::before {
-            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, transparent 50%), /* light purple */
-                        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.2) 0%, transparent 50%); /* light teal */
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
             opacity: 0.3; 
         }
         .light-mode .profile-card, 
@@ -50,7 +50,7 @@
 
         /* DARK MODE STYLES (Ungu Gelap & Teal Neon) */
         .neon-gradient-bg {
-            background: linear-gradient(135deg, #1C0C2C 0%, #080808 100%); /* Dark Purple/Black background */
+            background: linear-gradient(135deg, #1C0C2C 0%, #080808 100%);
             position: relative;
             overflow: hidden;
         }
@@ -61,8 +61,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.4) 0%, transparent 50%), /* Purple neon */
-                        radial-gradient(circle at bottom left, rgba(45, 212, 191, 0.3) 0%, transparent 50%); /* Teal neon */
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.4) 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(45, 212, 191, 0.3) 0%, transparent 50%);
             animation: gradient-shift 15s ease infinite alternate;
             opacity: 0.5;
             z-index: 0;
@@ -71,10 +71,10 @@
         .profile-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.2); /* Border Emas Neon */
+            border: 1px solid rgba(255, 215, 0, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .content-box { /* Latar belakang untuk halaman Payment dan Contact */
+        .content-box {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -87,16 +87,16 @@
         
         /* Neon Button (Teal Utama) */
         .neon-button {
-            background: linear-gradient(90deg, #06B6D4, #2DD4BF); /* Teal ke Cyan */
+            background: linear-gradient(90deg, #06B6D4, #2DD4BF);
             box-shadow: 0 4px 15px rgba(6, 182, 212, 0.5);
             color: white;
             transition: box-shadow 0.2s, background 0.2s; 
         }
         /* Tombol Lainnya (Gold/Aksen) */
         .other-button {
-            background: linear-gradient(90deg, #FFD700, #F0E68C); /* Gold ke Khaki */
+            background: linear-gradient(90deg, #FFD700, #F0E68C);
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-            color: #1f2937; /* Teks gelap di tombol gold */
+            color: #1f2937;
             transition: box-shadow 0.2s, background 0.2s; 
         }
 
@@ -116,18 +116,18 @@
             font-weight: 600;
             box-shadow: none;
             transition: color 0.2s;
-            color: #d1d5db; /* Default dark mode color */
+            color: #d1d5db;
         }
         .copy-button:hover {
-            color: #06B6D4; /* Hover Teal Neon */
+            color: #06B6D4;
         }
 
         /* Light Mode specific colors */
         .light-mode .text-primary-neon {
-            color: #06B6D4 !important; /* Teal neon di light mode */
+            color: #06B6D4 !important;
         }
         .light-mode .text-secondary-neon {
-            color: #1f2937 !important; /* Teks gelap di light mode */
+            color: #1f2937 !important;
         }
         .light-mode .dark-text {
             color: #1f2937 !important; 
@@ -148,15 +148,15 @@
         }
         .avatar-img {
             border-radius: 50%;
-            border: 4px solid rgba(255, 215, 0, 0.5); /* Border Emas Neon */
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Shadow Emas Neon */
+            border: 4px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
         }
 
         /* STYLING TOMBOL MUSIK DAN TEMA BARU */
         .top-right-controls {
             display: flex;
             align-items: center;
-            gap: 0.75rem; /* Jarak antar tombol */
+            gap: 0.75rem; 
         }
         .music-control-btn {
             background: none;
@@ -176,29 +176,6 @@
         .light-mode .music-control-btn:hover {
             background-color: rgba(6, 182, 212, 0.1);
         }
-        .upload-label {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 0.75rem;
-            border-radius: 9999px; /* rounded-full */
-            font-size: 0.875rem;
-            font-weight: 600;
-            background-color: #FFD700; /* Gold */
-            color: #1f2937;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            line-height: 1.25rem;
-        }
-        .upload-label:hover {
-            opacity: 0.8;
-        }
-        .light-mode .upload-label {
-            background-color: #F0E68C;
-        }
-        #file-upload-input {
-            display: none;
-        }
-
 
         @keyframes gradient-shift {
             0% { transform: translate(0, 0); }
@@ -213,12 +190,6 @@
         <div class="flex justify-end mb-4 relative z-20">
             <div class="top-right-controls">
 
-                <label for="file-upload-input" class="upload-label">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    Upload Lagu
-                </label>
-                <input type="file" id="file-upload-input" accept="audio/mp3,audio/wav,audio/ogg">
-                
                 <button id="play-pause-btn" class="music-control-btn" aria-label="Play/Pause Music">
                     <svg id="play-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
                     <svg id="pause-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
@@ -250,5 +221,4 @@
 
     <script src="script.js"></script>
 </body>
-    </html>
-    
+</html>
