@@ -1,5 +1,5 @@
 // --- DATA KONSTANTA ---
-const AVATAR_URL = 'https://i.supaimg.com/cf39d2bc-f804-4773-8db2-2641a39b4a56.png';
+const AVATAR_URL = 'https://i.supaimg.com/2e874c84-c8ca-4be6-9f89-00adbcebe4f5.png';
 const DANA_NUMBER = '087731994269'; 
 const DANA_ICON_URL = 'https://i.supaimg.com/20819a22-ee60-49ed-bdf1-58536467f5d4.jpg'; 
 const WA_ICON_URL = 'https://i.supaimg.com/a58841b8-fa21-4c3b-b219-1e8bd22080b3.jpg';
@@ -13,7 +13,8 @@ const CONTACT_DATA = {
 // --- VARIABEL GLOBAL ---
 let currentPage;
 let contentArea, themeToggle, moonIcon, sunIcon;
-let backgroundMusic, playPauseBtn, playIcon, pauseIcon, volumeSlider;
+let backgroundMusic, playPauseBtn, playIcon, pauseIcon;
+let fileUploadInput; // Variabel baru untuk input file
 
 
 // --- DEFINISI TEMPLATE ---
@@ -208,9 +209,15 @@ function toggleTheme() {
     }
 }
 
-// --- AUDIO PLAYER FUNGSI ---
+// --- AUDIO PLAYER FUNGSI & UPLOAD BARU ---
+
 function togglePlayPause() {
     if (backgroundMusic.paused) {
+        // Cek jika lagu default tidak ada, jangan putar
+        if (!backgroundMusic.currentSrc) {
+            console.warn("Tidak ada sumber musik yang valid.");
+            return;
+        }
         backgroundMusic.play();
         playIcon.classList.add('hidden');
         pauseIcon.classList.remove('hidden');
@@ -221,8 +228,35 @@ function togglePlayPause() {
     }
 }
 
-function changeVolume() {
-    backgroundMusic.volume = volumeSlider.value;
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    
+    // Hanya proses jika file dipilih dan berjenis audio
+    if (file && file.type.startsWith('audio/')) {
+        // 1. Hentikan pemutaran yang sedang berjalan
+        if (!backgroundMusic.paused) {
+            backgroundMusic.pause();
+        }
+        
+        // 2. Buat URL objek untuk file lokal
+        const fileURL = URL.createObjectURL(file);
+        
+        // 3. Set sumber baru ke elemen audio
+        backgroundMusic.src = fileURL;
+        
+        // 4. Setelah sumber dimuat, putar otomatis
+        backgroundMusic.load(); // Memuat sumber audio baru
+        backgroundMusic.oncanplaythrough = () => {
+            backgroundMusic.play();
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+            backgroundMusic.oncanplaythrough = null; // Hapus event listener agar tidak terpicu lagi
+        };
+
+        alert(`Lagu "${file.name}" berhasil diunggah dan diputar!`);
+    } else if (file) {
+        alert("Gagal: File yang diunggah harus berupa file audio.");
+    }
 }
 
 
@@ -238,7 +272,10 @@ document.addEventListener('DOMContentLoaded', function() {
     playPauseBtn = document.getElementById('play-pause-btn');
     playIcon = document.getElementById('play-icon');
     pauseIcon = document.getElementById('pause-icon');
-    volumeSlider = document.getElementById('volume-slider');
+    fileUploadInput = document.getElementById('file-upload-input');
+
+    // Setting volume ke nilai tetap 50%
+    backgroundMusic.volume = 0.5;
 
     // Muat Tema Tersimpan
     const savedTheme = localStorage.getItem('theme');
@@ -257,8 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi Aksi
     navigate('home');
     themeToggle.addEventListener('click', toggleTheme);
-    backgroundMusic.volume = volumeSlider.value;
     playPauseBtn.addEventListener('click', togglePlayPause);
-    volumeSlider.addEventListener('input', changeVolume);
+    fileUploadInput.addEventListener('change', handleFileUpload);
 });
-    
+                                      
