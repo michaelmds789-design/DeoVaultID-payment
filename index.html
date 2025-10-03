@@ -152,46 +152,51 @@
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Shadow Emas Neon */
         }
 
-        .audio-player-container {
-            position: fixed;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 1rem;
-            padding: 0.75rem 1rem;
+        /* STYLING TOMBOL MUSIK DAN TEMA BARU */
+        .top-right-controls {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            transition: background 0.3s ease-in-out;
+            gap: 0.75rem; /* Jarak antar tombol */
         }
-        .light-mode .audio-player-container {
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .audio-player-container button {
+        .music-control-btn {
             background: none;
             border: none;
-            color: white;
+            padding: 0.5rem;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 1.5rem;
-            transition: color 0.2s;
+            transition: background 0.2s, color 0.2s;
+            color: #2DD4BF; /* Teal Neon */
         }
-        .light-mode .audio-player-container button {
+        .music-control-btn:hover {
+            background-color: rgba(45, 212, 191, 0.2);
+        }
+        .light-mode .music-control-btn {
+            color: #06B6D4;
+        }
+        .light-mode .music-control-btn:hover {
+            background-color: rgba(6, 182, 212, 0.1);
+        }
+        .upload-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.875rem;
+            font-weight: 600;
+            background-color: #FFD700; /* Gold */
             color: #1f2937;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            line-height: 1.25rem;
         }
-        .audio-player-container input[type="range"]::-webkit-slider-thumb {
-            background: #06B6D4; /* Teal Neon */
-            box-shadow: 0 0 5px rgba(6, 182, 212, 0.6);
+        .upload-label:hover {
+            opacity: 0.8;
         }
-        .track-info {
-            color: #ccc;
+        .light-mode .upload-label {
+            background-color: #F0E68C;
         }
-        .light-mode .track-info {
-            color: #6b7280;
+        #file-upload-input {
+            display: none;
         }
 
 
@@ -206,14 +211,28 @@
     <div class="main-container w-full max-w-sm mx-auto p-4 sm:p-6 relative z-10">
         
         <div class="flex justify-end mb-4 relative z-20">
-            <button id="theme-toggle" class="p-2 rounded-full text-white bg-gray-700 hover:bg-gray-600 transition duration-300 shadow-lg">
-                <svg id="moon-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 8.948 8.948 0 0012 21a9.001 9.001 0 008.354-5.646z"></path>
-                </svg>
-                <svg id="sun-icon" class="w-6 h-6 hidden text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                </svg>
-            </button>
+            <div class="top-right-controls">
+
+                <label for="file-upload-input" class="upload-label">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    Upload Lagu
+                </label>
+                <input type="file" id="file-upload-input" accept="audio/mp3,audio/wav,audio/ogg">
+                
+                <button id="play-pause-btn" class="music-control-btn" aria-label="Play/Pause Music">
+                    <svg id="play-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                    <svg id="pause-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                </button>
+
+                <button id="theme-toggle" class="p-2 rounded-full text-white bg-gray-700 hover:bg-gray-600 transition duration-300 shadow-lg">
+                    <svg id="moon-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 8.948 8.948 0 0012 21a9.001 9.001 0 008.354-5.646z"></path>
+                    </svg>
+                    <svg id="sun-icon" class="w-6 h-6 hidden text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div id="content-area">
@@ -224,21 +243,12 @@
         </p>
     </div>
 
-    
-    <div class="audio-player-container">
-        <audio id="background-music" loop>
-            <source src="https://www.bensound.com/bensound-music/bensound-retrosoul.mp3" type="audio/mpeg">
-            Browser Anda tidak mendukung elemen audio.
-        </audio>
-        <button id="play-pause-btn" aria-label="Play/Pause">
-            <svg id="play-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-            <svg id="pause-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-        </button>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">
-        <span class="track-info">RetroSoul - Bensound.com</span>
-    </div>
+    <audio id="background-music" loop>
+        <source id="audio-source" src="https://www.bensound.com/bensound-music/bensound-retrosoul.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
 
     <script src="script.js"></script>
 </body>
-                    </html>
-                
+    </html>
+    
