@@ -6,6 +6,7 @@
     <title>DeoVault ID - Payment & Information</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* [SEMUA CSS TELAH DIMODIFIKASI UNTUK SKEMA UNGU/TEAL] */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         html {
@@ -36,16 +37,21 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .light-mode .neon-gradient-bg::before {
-            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, transparent 50%), 
+                        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.2) 0%, transparent 50%); 
             opacity: 0.3; 
         }
         .light-mode .profile-card, 
         .light-mode .content-box,
-        .light-mode .payment-card, .light-mode .contact-button {
+        .light-mode .payment-card { /* payment-card tetap punya latar putih */
             background: white;
             border: 1px solid #e5e7eb;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .light-mode .contact-button { /* contact-button (halaman contact) menjadi transparan */
+            background: none;
+            border: none;
+            box-shadow: none;
         }
 
         /* DARK MODE STYLES (Ungu Gelap & Teal Neon) */
@@ -61,7 +67,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.4) 0%, transparent 50%),
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.4) 0%, transparent 50%), 
                         radial-gradient(circle at bottom left, rgba(45, 212, 191, 0.3) 0%, transparent 50%);
             animation: gradient-shift 15s ease infinite alternate;
             opacity: 0.5;
@@ -74,11 +80,11 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .content-box {
-            background: rgba(255, 255, 255, 0.08);
+        .content-box { /* Payment Menu Content Latar Belakang Teal Neon */
+            background: rgba(45, 212, 191, 0.1); /* Latar Hijau/Teal Khas */
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(45, 212, 191, 0.4);
+            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.4);
         }
         .payment-card {
             background: rgba(255, 255, 255, 0.08);
@@ -118,9 +124,6 @@
             transition: color 0.2s;
             color: #d1d5db;
         }
-        .copy-button:hover {
-            color: #06B6D4;
-        }
 
         /* Light Mode specific colors */
         .light-mode .text-primary-neon {
@@ -139,7 +142,6 @@
             color: #06B6D4;
         }
 
-
         .contact-icon-img {
             width: 2.5rem; 
             height: 2.5rem;
@@ -152,14 +154,14 @@
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
         }
 
-        /* STYLING TOMBOL MUSIK DAN TEMA BARU */
+        /* STYLING TOMBOL MUSIK DAN TEMA */
         .top-right-controls {
             display: flex;
             align-items: center;
             gap: 0.75rem; 
         }
         .music-control-btn {
-            background: none;
+            background: rgba(0, 0, 0, 0.4); /* Background gelap transparan untuk ikon musik */
             border: none;
             padding: 0.5rem;
             border-radius: 50%;
@@ -167,16 +169,14 @@
             transition: background 0.2s, color 0.2s;
             color: #2DD4BF; /* Teal Neon */
         }
+        .light-mode .music-control-btn {
+            background: rgba(255, 255, 255, 0.8);
+            color: #06B6D4;
+        }
         .music-control-btn:hover {
             background-color: rgba(45, 212, 191, 0.2);
         }
-        .light-mode .music-control-btn {
-            color: #06B6D4;
-        }
-        .light-mode .music-control-btn:hover {
-            background-color: rgba(6, 182, 212, 0.1);
-        }
-
+        
         @keyframes gradient-shift {
             0% { transform: translate(0, 0); }
             100% { transform: translate(-20%, -20%); }
@@ -215,7 +215,7 @@
     </div>
 
     <audio id="background-music" loop>
-        <source id="audio-source" src="https://pixabay.com/music/upbeat-deep-abstract-ambient-snowcap-401656/" type="audio/mpeg">
+        <source id="audio-source" src="http://googleusercontent.com/file_content/1" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 

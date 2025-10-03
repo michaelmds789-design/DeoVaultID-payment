@@ -67,7 +67,7 @@ const paymentTemplate = `
 `;
 
 const contactTemplate = `
-    <div class="content-box p-6 rounded-3xl text-center w-full transition duration-300 mb-6">
+    <div class="p-6 text-center w-full transition duration-300 mb-6">
         <button class="back-button py-2 px-4 font-semibold rounded-full mb-8 shadow-md" onclick="navigate('home')">
             Kembali
         </button>
