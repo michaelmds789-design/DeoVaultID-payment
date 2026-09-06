@@ -2,223 +2,572 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeoVault ID - Payment & Information</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Deodamich — Pembayaran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* [SEMUA CSS TELAH DIMODIFIKASI UNTUK SKEMA UNGU/TEAL] */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        
-        html {
-            font-size: 16px; 
+        :root {
+            --bg-main: #0a0c14;
+            --surface-card: #121524;
+            --surface-hover: #1a1e30;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #8a92a6;
+            --font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+
+        * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box; 
-            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
-            background-color: #080808; 
-            color: white;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow-x: hidden;
+            padding: 20px;
         }
 
-        /* LIGHT MODE STYLES */
-        .light-mode body {
-            background-color: #f0f4f8; 
-            color: #1f2937; 
-        }
-        .light-mode .neon-gradient-bg {
-            background: #ffffff;
-            color: #1f2937;
-            border: 1px solid #d1d5db;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .light-mode .neon-gradient-bg::before {
-            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, transparent 50%), 
-                        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.2) 0%, transparent 50%); 
-            opacity: 0.3; 
-        }
-        .light-mode .profile-card, 
-        .light-mode .content-box,
-        .light-mode .payment-card { /* payment-card tetap punya latar putih */
-            background: white;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .light-mode .contact-button { /* contact-button (halaman contact) menjadi transparan */
-            background: none;
-            border: none;
-            box-shadow: none;
-        }
-
-        /* DARK MODE STYLES (Ungu Gelap & Teal Neon) */
-        .neon-gradient-bg {
-            background: linear-gradient(135deg, #1C0C2C 0%, #080808 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        .neon-gradient-bg::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.4) 0%, transparent 50%), 
-                        radial-gradient(circle at bottom left, rgba(45, 212, 191, 0.3) 0%, transparent 50%);
-            animation: gradient-shift 15s ease infinite alternate;
-            opacity: 0.5;
-            z-index: 0;
+        .bg-glow {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 50% 30%, rgba(30, 41, 89, 0.35) 0%, rgba(10, 12, 20, 0) 70%);
+            z-index: -1;
             pointer-events: none;
         }
-        .profile-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .content-box { /* Payment Menu Content Latar Belakang Teal Neon */
-            background: rgba(45, 212, 191, 0.1); /* Latar Hijau/Teal Khas */
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(45, 212, 191, 0.4);
-            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.4);
-        }
-        .payment-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        
-        /* Neon Button (Teal Utama) */
-        .neon-button {
-            background: linear-gradient(90deg, #06B6D4, #2DD4BF);
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.5);
-            color: white;
-            transition: box-shadow 0.2s, background 0.2s; 
-        }
-        /* Tombol Lainnya (Gold/Aksen) */
-        .other-button {
-            background: linear-gradient(90deg, #FFD700, #F0E68C);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-            color: #1f2937;
-            transition: box-shadow 0.2s, background 0.2s; 
+
+        .container {
+            width: 100%;
+            max-width: 400px;
         }
 
-        /* Tombol Kembali (Teal Neon) */
-        .back-button {
-            background: linear-gradient(45deg, #06B6D4, #2DD4BF);
-            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
-            color: white;
-            transition: box-shadow 0.2s, background 0.2s;
-        }
-        /* Tombol Salin (Teks Sederhana) */
-        .copy-button {
-            background-color: transparent !important; 
-            padding: 0.5rem 0; 
-            border-radius: 0;
-            font-size: 1rem; 
-            font-weight: 600;
-            box-shadow: none;
-            transition: color 0.2s;
-            color: #d1d5db;
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
         }
 
-        /* Light Mode specific colors */
-        .light-mode .text-primary-neon {
-            color: #06B6D4 !important;
-        }
-        .light-mode .text-secondary-neon {
-            color: #1f2937 !important;
-        }
-        .light-mode .dark-text {
-            color: #1f2937 !important; 
-        }
-        .light-mode .copy-button {
-            color: #6b7280; 
-        }
-        .light-mode .copy-button:hover {
-            color: #06B6D4;
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
-        .contact-icon-img {
-            width: 2.5rem; 
-            height: 2.5rem;
-            object-fit: contain;
-            border-radius: 0.75rem;
-        }
-        .avatar-img {
+        .status-dot {
+            width: 6px; height: 6px;
+            background-color: #10b981;
             border-radius: 50%;
-            border: 4px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
         }
 
-        /* STYLING TOMBOL MUSIK DAN TEMA */
-        .top-right-controls {
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .methods-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 16px;
             display: flex;
             align-items: center;
-            gap: 0.75rem; 
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
         }
-        .music-control-btn {
-            background: rgba(0, 0, 0, 0.4); /* Background gelap transparan untuk ikon musik */
+
+        .card:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-active);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .icon-box {
+            width: 46px;
+            height: 46px;
+            background: #ffffff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            flex-shrink: 0;
+        }
+
+        .icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .action-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--brand-color, #fff);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .overlay {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+
+        .sheet {
+            position: fixed;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%; max-width: 420px;
+            background: #121420;
+            border-top: 1px solid var(--border-active);
+            border-radius: 28px 28px 0 0;
+            padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+            z-index: 101;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sheet.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (min-width: 520px) {
+            .sheet {
+                bottom: auto; top: 50%;
+                transform: translate(-50%, -50%) scale(0.95);
+                border-radius: 28px;
+                border: 1px solid var(--border-active);
+                opacity: 0; pointer-events: none;
+            }
+            .sheet.active {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1; pointer-events: auto;
+            }
+        }
+
+        .sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .sheet-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sheet-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .btn-close {
+            background: rgba(255, 255, 255, 0.08);
             border: none;
-            padding: 0.5rem;
+            color: #fff;
+            width: 32px; height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            color: #2DD4BF; /* Teal Neon */
+            display: flex; align-items: center; justify-content: center;
         }
-        .light-mode .music-control-btn {
-            background: rgba(255, 255, 255, 0.8);
-            color: #06B6D4;
+
+        .sheet-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
-        .music-control-btn:hover {
-            background-color: rgba(45, 212, 191, 0.2);
+
+        .detail-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
         }
-        
-        @keyframes gradient-shift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-20%, -20%); }
+
+        .detail-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .number-display {
+            margin-top: 12px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--brand-color, #fff);
+            letter-spacing: 1px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px dashed rgba(255,255,255,0.15);
+        }
+
+        .qr-display {
+            display: none;
+            margin: 12px auto 0;
+            padding: 12px;
+            background: #fff;
+            border-radius: 16px;
+            width: fit-content;
+        }
+
+        .qr-display img {
+            width: 180px; height: 180px;
+            display: block;
+        }
+
+        .instruction {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background: var(--brand-color, #3b82f6);
+            color: #fff;
+            font-family: var(--font-family);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary.copied {
+            background: #10b981 !important;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: bottom 0.3s ease;
+            z-index: 200;
+        }
+
+        .toast.show {
+            bottom: 30px;
+        }
+
+        svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     </style>
 </head>
-<body class="neon-gradient-bg flex items-start justify-center pt-8 pb-12 min-h-screen">
+<body>
 
-    <div class="main-container w-full max-w-sm mx-auto p-4 sm:p-6 relative z-10">
-        
-        <div class="flex justify-end mb-4 relative z-20">
-            <div class="top-right-controls">
+    <div class="bg-glow"></div>
 
-                <button id="play-pause-btn" class="music-control-btn" aria-label="Play/Pause Music">
-                    <svg id="play-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                    <svg id="pause-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                </button>
-
-                <button id="theme-toggle" class="p-2 rounded-full text-white bg-gray-700 hover:bg-gray-600 transition duration-300 shadow-lg">
-                    <svg id="moon-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 8.948 8.948 0 0012 21a9.001 9.001 0 008.354-5.646z"></path>
-                    </svg>
-                    <svg id="sun-icon" class="w-6 h-6 hidden text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                </button>
+    <div class="container">
+        <div class="header">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Deodamich Official
             </div>
+            <h1 class="title">Metode Pembayaran</h1>
+            <p class="subtitle">Pilih saluran pembayaran manual yang tersedia</p>
         </div>
 
-        <div id="content-area">
-            </div>
-
-        <p class="text-center text-gray-500 text-sm mt-10">
-            © 2025 DeoVault ID
-        </p>
+        <div class="methods-grid" id="methods-list"></div>
     </div>
 
-    <audio id="background-music" loop>
-        <source id="audio-source" src="http://googleusercontent.com/file_content/1" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
+    <div class="overlay" id="overlay"></div>
+    <div class="sheet" id="sheet">
+        <div class="sheet-header">
+            <div class="sheet-brand">
+                <div class="icon-box" style="width:36px; height:36px; padding:6px;">
+                    <img id="sheet-logo" src="" alt="Brand">
+                </div>
+                <div class="sheet-title" id="sheet-title">Nama Metode</div>
+            </div>
+            <button class="btn-close" id="btn-close">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="sheet-body">
+            <div class="detail-box">
+                <div class="detail-label">Pemilik Akun</div>
+                <div class="detail-value" id="sheet-holder">-</div>
+                
+                <div class="number-display" id="sheet-number"></div>
+                
+                <div class="qr-display" id="sheet-qr-box">
+                    <img id="sheet-qr-img" src="" alt="QRIS Code">
+                </div>
+            </div>
+
+            <p class="instruction" id="sheet-note"></p>
+
+            <button class="btn-primary" id="btn-action">
+                <span id="btn-icon"></span>
+                <span id="btn-text">Salin Nomor</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Tersalin ke clipboard!</div>
+
+    <script>
+        /* ==========================================
+           PENGATURAN METODE PEMBAYARAN DEODAMICH
+           ========================================== */
+        const METHODS = [
+            {
+                name: "GoPay",
+                holder: "Deodamich Official",
+                number: "087864255946",
+                color: "#00AED6",
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2300AED6'/><circle cx='50' cy='50' r='20' fill='%23ffffff'/></svg>",
+                qr: "",
+                note: "Buka aplikasi Gojek, lakukan transfer sesuai dengan nomor di atas."
+            },
+            {
+                name: "DANA",
+                holder: "Deodamich Official",
+                number: "087864255946",
+                color: "#118EEA",
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23118EEA'/><text x='50%' y='62%' font-size='28' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>DANA</text></svg>",
+                qr: "",
+                note: "Gunakan fitur Kirim di aplikasi DANA menuju nomor yang tertera."
+            },
+            {
+                name: "QRIS",
+                holder: "Deodamich Official",
+                number: "",
+                color: "#E4002B",
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E4002B'/><text x='50%' y='62%' font-size='24' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>QRIS</text></svg>",
+                qr: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEODAMICH_QRIS_DEMO",
+                note: "Pindai QR ini menggunakan m-Banking atau aplikasi e-Wallet pilihan Anda."
+            }
+        ];
+        /* ========================================== */
+
+        const ICON_COPY = `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+        const ICON_CHECK = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+
+        const listContainer = document.getElementById('methods-list');
+        const overlay = document.getElementById('overlay');
+        const sheet = document.getElementById('sheet');
+        const btnClose = document.getElementById('btn-close');
+        const btnAction = document.getElementById('btn-action');
+        const btnIcon = document.getElementById('btn-icon');
+        const btnText = document.getElementById('btn-text');
+        const toast = document.getElementById('toast');
+
+        function render() {
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+            METHODS.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.onclick = () => openSheet(index);
+                
+                const label = item.number ? 'Bayar Via No. HP' : 'Scan Kode QR';
+                
+                el.innerHTML = `
+                    <div class="card-left">
+                        <div class="icon-box">
+                            <img src="${item.logo}" alt="${item.name}">
+                        </div>
+                        <div>
+                            <div class="card-title">${item.name}</div>
+                            <div class="card-subtitle">${label}</div>
+                        </div>
+                    </div>
+                    <div class="action-tag" style="--brand-color: ${item.color}">Pilih</div>
+                `;
+                listContainer.appendChild(el);
+            });
+        }
+
+        function openSheet(index) {
+            const data = METHODS[index];
+            
+            sheet.style.setProperty('--brand-color', data.color);
+            document.getElementById('sheet-logo').src = data.logo;
+            document.getElementById('sheet-title').textContent = data.name;
+            document.getElementById('sheet-holder').textContent = data.holder;
+            document.getElementById('sheet-note').textContent = data.note;
+
+            const numDisplay = document.getElementById('sheet-number');
+            const qrDisplay = document.getElementById('sheet-qr-box');
+            const qrImg = document.getElementById('sheet-qr-img');
+
+            btnAction.className = 'btn-primary';
+
+            if (data.number) {
+                numDisplay.style.display = 'block';
+                qrDisplay.style.display = 'none';
+                numDisplay.textContent = data.number;
+
+                btnIcon.innerHTML = ICON_COPY;
+                btnText.textContent = 'Salin Nomor';
+                btnAction.onclick = () => copyText(data.number);
+            } else if (data.qr) {
+                numDisplay.style.display = 'none';
+                qrDisplay.style.display = 'block';
+                qrImg.src = data.qr;
+
+                btnIcon.innerHTML = ICON_DOWNLOAD;
+                btnText.textContent = 'Simpan QR';
+                btnAction.onclick = () => downloadImage(data.qr, `${data.name}_QR.png`);
+            }
+
+            overlay.classList.add('active');
+            sheet.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheet() {
+            overlay.classList.remove('active');
+            sheet.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function copyText(val) {
+            const clean = val.replace(/[-\s]/g, '');
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(clean).then(onCopySuccess);
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = clean;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                onCopySuccess();
+            }
+        }
+
+        function onCopySuccess() {
+            btnAction.classList.add('copied');
+            btnIcon.innerHTML = ICON_CHECK;
+            btnText.textContent = 'Tersalin!';
+            showToast('Nomor berhasil disalin ke clipboard');
+
+            setTimeout(() => {
+                btnAction.classList.remove('copied');
+                btnIcon.innerHTML = ICON_COPY;
+                btnText.textContent = 'Salin Nomor';
+            }, 2000);
+        }
+
+export function downloadImage(url, filename) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast('Mengunduh QR...');
+        }
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        btnClose.onclick = closeSheet;
+        overlay.onclick = closeSheet;
+        document.onkeydown = (e) => { if (e.key === 'Escape') closeSheet(); };
+
+        render();
+    </script>
 </body>
 </html>

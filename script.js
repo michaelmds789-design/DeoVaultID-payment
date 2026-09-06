@@ -1,263 +1,168 @@
-// --- DATA KONSTANTA ---
-const AVATAR_URL = 'https://i.supaimg.com/2e874c84-c8ca-4be6-9f89-00adbcebe4f5.png';
-const DANA_NUMBER = '087731994269'; 
-const DANA_ICON_URL = 'https://i.supaimg.com/20819a22-ee60-49ed-bdf1-58536467f5d4.jpg'; 
-const WA_ICON_URL = 'https://i.supaimg.com/a58841b8-fa21-4c3b-b219-1e8bd22080b3.jpg';
-const TG_ICON_URL = 'https://i.supaimg.com/00182d53-21f3-4c3d-82cf-5b5b497f30ff.jpg';
+/* ==========================================
+   PENGATURAN METODE PEMBAYARAN DEODAMICH
+   ========================================== */
+const METHODS = [
+    {
+        name: "GoPay",
+        holder: "Deodamich Official",
+        number: "087864255946",
+        color: "#00AED6",
+        logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2300AED6'/><circle cx='50' cy='50' r='20' fill='%23ffffff'/></svg>",
+        qr: "",
+        note: "Buka aplikasi Gojek, lakukan transfer sesuai dengan nomor di atas."
+    },
+    {
+        name: "DANA",
+        holder: "Deodamich Official",
+        number: "087864255946",
+        color: "#118EEA",
+        logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23118EEA'/><text x='50%' y='62%' font-size='28' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>DANA</text></svg>",
+        qr: "",
+        note: "Gunakan fitur Kirim di aplikasi DANA menuju nomor yang tertera."
+    },
+    {
+        name: "QRIS",
+        holder: "Deodamich Official",
+        number: "",
+        color: "#E4002B",
+        logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E4002B'/><text x='50%' y='62%' font-size='24' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>QRIS</text></svg>",
+        qr: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEODAMICH_QRIS_DEMO",
+        note: "Pindai QR ini menggunakan m-Banking atau aplikasi e-Wallet pilihan Anda."
+    }
+];
+/* ========================================== */
 
-const CONTACT_DATA = {
-    'Saluran WA': { url: 'https://whatsapp.com/channel/0029VbBVqDO3rZZbiIcmEs0q', icon: WA_ICON_URL },
-    'Telegram': { url: 'https://t.me/DeoVaultID', icon: TG_ICON_URL }
-};
+const ICON_COPY = `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+const ICON_CHECK = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
 
-// --- VARIABEL GLOBAL ---
-let currentPage;
-let contentArea, themeToggle, moonIcon, sunIcon;
-let backgroundMusic, playPauseBtn, playIcon, pauseIcon;
+const listContainer = document.getElementById('methods-list');
+const overlay = document.getElementById('overlay');
+const sheet = document.getElementById('sheet');
+const btnClose = document.getElementById('btn-close');
+const btnAction = document.getElementById('btn-action');
+const btnIcon = document.getElementById('btn-icon');
+const btnText = document.getElementById('btn-text');
+const toast = document.getElementById('toast');
 
-
-// --- DEFINISI TEMPLATE ---
-
-const homeTemplate = `
-    <div class="flex flex-col items-center mb-10 mt-2">
-        <div class="w-24 h-24 rounded-full overflow-hidden mb-4 avatar-img">
-            <img id="avatar-img" src="${AVATAR_URL}" alt="Avatar DeoVault ID" class="w-full h-full object-cover" 
-                onerror="this.onerror=null; this.src='https://placehold.co/96x96/FFD700/000?text=ID';" />
-        </div>
+function render() {
+    if (!listContainer) return;
+    listContainer.innerHTML = '';
+    METHODS.forEach((item, index) => {
+        const el = document.createElement('div');
+        el.className = 'card';
+        el.onclick = () => openSheet(index);
         
-        <div class="profile-card p-6 rounded-3xl text-center transition duration-300">
-            <h1 class="text-4xl font-extrabold text-white mb-2 transition duration-300">
-                DeoVault ID
-            </h1>
-            <h2 class="text-xl font-semibold text-cyan-400 mb-4 transition duration-300 text-primary-neon">
-                Pusat Transaksi & Informasi Resmi
-            </h2>
-            <p class="text-gray-400 text-sm max-w-xs mx-auto transition duration-300">
-                Selamat datang di layanan premium. Pilih menu di bawah untuk memulai.
-            </p>
-        </div>
-    </div>
-
-    <div class="space-y-4">
-        <button data-page="payment" class="neon-button w-full py-4 text-white text-lg font-semibold rounded-2xl" onclick="navigate('payment')">
-            Payment Menu
-        </button>
-        <button data-page="contact" class="other-button w-full py-4 text-lg font-semibold rounded-2xl mt-6" onclick="navigate('contact')">
-            Other Information
-        </button>
-    </div>
-`;
-
-const paymentTemplate = `
-    <div class="content-box p-6 rounded-3xl text-center w-full transition duration-300 mb-6">
-        <button class="back-button py-2 px-4 font-semibold rounded-full mb-8 shadow-md" onclick="navigate('home')">
-            Kembali
-        </button>
-
-        <div class="flex flex-col items-center">
-            <h1 class="text-2xl font-bold text-white mb-6 transition duration-300 text-primary-neon">Pilihan Pembayaran</h1>
-            
-            <h2 class="text-xl font-bold text-red-400 mb-4 transition duration-300 text-secondary-neon">E-Wallet Transfer</h2>
-            
-            <div class="space-y-4 w-full">
-                ${createPaymentCard('DANA', DANA_NUMBER, DANA_ICON_URL)}
-            </div>
-        </div>
-    </div>
-`;
-
-const contactTemplate = `
-    <div class="p-6 text-center w-full transition duration-300 mb-6">
-        <button class="back-button py-2 px-4 font-semibold rounded-full mb-8 shadow-md" onclick="navigate('home')">
-            Kembali
-        </button>
-
-        <div class="flex flex-col items-center">
-            <h1 class="text-2xl font-bold text-white mb-8 transition duration-300 text-primary-neon">Informasi dan Dukungan</h1>
-            
-            <div class="grid grid-cols-2 gap-4 w-full">
-                ${createContactButton('Saluran WA', CONTACT_DATA['Saluran WA'].icon, CONTACT_DATA['Saluran WA'].url)}
-                ${createContactButton('Telegram', CONTACT_DATA['Telegram'].icon, CONTACT_DATA['Telegram'].url)}
-            </div>
-        </div>
-    </div>
-`;
-
-// --- FUNGSI UTILITY ---
-
-function createPaymentCard(name, number, iconUrl) {
-    const id = name.toLowerCase().replace(' ', '');
-
-    return `
-        <div class="payment-card p-4 rounded-3xl flex items-center justify-between transition duration-300">
-            <div class="flex items-center">
-                <img src="${iconUrl}" alt="${name} Icon" class="w-12 h-12 rounded-xl mr-4 object-cover">
-                <div class="flex flex-col justify-center">
-                    <p class="text-lg text-white font-semibold transition duration-300 dark-text">${name}</p>
-                    <span id="${id}-number" class="text-gray-400 text-base transition duration-300">${number}</span>
+        const label = item.number ? 'Bayar Via No. HP' : 'Scan Kode QR';
+        
+        el.innerHTML = `
+            <div class="card-left">
+                <div class="icon-box">
+                    <img src="${item.logo}" alt="${item.name}">
+                </div>
+                <div>
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-subtitle">${label}</div>
                 </div>
             </div>
-            <button class="copy-button font-semibold transition duration-300" data-target="${id}-number" onclick="copyToClipboard(event)">
-                Salin
-            </button>
-        </div>
-    `;
-}
-
-function createContactButton(name, iconUrl, linkUrl) {
-    return `
-        <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="contact-button w-full flex flex-col items-center justify-center p-6 rounded-2xl shadow-xl transition duration-300 space-y-2">
-            <img src="${iconUrl}" alt="${name} Icon" class="contact-icon-img" />
-            <span class="text-white text-sm font-medium transition duration-300 dark-text">${name}</span>
-        </a>
-    `;
-}
-
-function navigate(page) {
-    currentPage = page;
-    contentArea.innerHTML = getTemplate(page); 
-    
-    // Apply theme styles after content is loaded
-    if (document.documentElement.classList.contains('light-mode')) {
-        applyLightModeStyles();
-    } else {
-        applyDarkModeStyles();
-    }
-}
-
-function getTemplate(page) {
-    switch (page) {
-        case 'payment':
-            return paymentTemplate;
-        case 'contact':
-            return contactTemplate;
-        case 'home':
-        default:
-            return homeTemplate;
-    }
-}
-
-function copyToClipboard(e) {
-    const button = e.currentTarget;
-    const targetId = button.getAttribute('data-target');
-    const targetElement = document.getElementById(targetId);
-    const originalText = 'Salin'; 
-
-    if (targetElement) {
-        const textToCopy = targetElement.textContent;
-        button.disabled = true;
-
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            button.textContent = 'Disalin'; 
-            button.style.color = '#3b82f6'; // Biru untuk disalin
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.color = ''; 
-                button.disabled = false;
-            }, 1500);
-        }).catch(err => {
-            console.error('Gagal menyalin: ', err);
-            button.textContent = 'Gagal!';
-            button.style.color = '#ef4444'; // Merah untuk gagal
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.color = ''; 
-                button.disabled = false;
-            }, 1500);
-        });
-    }
-}
-
-// --- LOGIKA DARK/LIGHT MODE ---
-
-function applyLightModeStyles() {
-    const darkColor = '#1f2937'; 
-    const accentTeal = '#06B6D4'; 
-    const mediumGray = '#4b5563';
-
-    // Apply color to dynamic text
-    document.querySelectorAll('#content-area h1').forEach(el => el.style.color = darkColor);
-    document.querySelectorAll('#content-area h2').forEach(el => el.style.color = accentTeal);
-    
-    document.querySelectorAll('.contact-button span, .payment-card p.dark-text').forEach(el => el.style.color = darkColor);
-    document.querySelectorAll('.profile-card p, [id$="-number"]').forEach(el => el.style.color = mediumGray);
-    
-    // Apply button specific styles
-    document.querySelectorAll('.copy-button').forEach(el => el.style.color = '#6b7280');
-    document.querySelectorAll('.neon-button, .other-button, .back-button').forEach(el => {
-        el.style.color = darkColor; 
+            <div class="action-tag" style="--brand-color: ${item.color}">Pilih</div>
+        `;
+        listContainer.appendChild(el);
     });
 }
 
-function applyDarkModeStyles() {
-    // Clear all inline styles to return to CSS defaults (Dark Mode)
-    document.querySelectorAll('#content-area *').forEach(el => el.style.color = '');
-}
-
-function toggleTheme() {
-    const isLightMode = document.documentElement.classList.toggle('light-mode');
+function openSheet(index) {
+    const data = METHODS[index];
     
-    localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+    sheet.style.setProperty('--brand-color', data.color);
+    document.getElementById('sheet-logo').src = data.logo;
+    document.getElementById('sheet-title').textContent = data.name;
+    document.getElementById('sheet-holder').textContent = data.holder;
+    document.getElementById('sheet-note').textContent = data.note;
 
-    moonIcon.classList.toggle('hidden', isLightMode);
-    sunIcon.classList.toggle('hidden', !isLightMode);
+    const numDisplay = document.getElementById('sheet-number');
+    const qrDisplay = document.getElementById('sheet-qr-box');
+    const qrImg = document.getElementById('sheet-qr-img');
 
-    if (isLightMode) {
-        applyLightModeStyles();
+    btnAction.className = 'btn-primary';
+
+    if (data.number) {
+        numDisplay.style.display = 'block';
+        qrDisplay.style.display = 'none';
+        numDisplay.textContent = data.number;
+
+        btnIcon.innerHTML = ICON_COPY;
+        btnText.textContent = 'Salin Nomor';
+        btnAction.onclick = () => copyText(data.number);
+    } else if (data.qr) {
+        numDisplay.style.display = 'none';
+        qrDisplay.style.display = 'block';
+        qrImg.src = data.qr;
+
+        btnIcon.innerHTML = ICON_DOWNLOAD;
+        btnText.textContent = 'Simpan QR';
+        btnAction.onclick = () => downloadImage(data.qr, `${data.name}_QR.png`);
+    }
+
+    overlay.classList.add('active');
+    sheet.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+    overlay.classList.remove('active');
+    sheet.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function copyText(val) {
+    const clean = val.replace(/[-\s]/g, '');
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(clean).then(onCopySuccess);
     } else {
-        applyDarkModeStyles();
+        const ta = document.createElement('textarea');
+        ta.value = clean;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        onCopySuccess();
     }
 }
 
-// --- AUDIO PLAYER FUNGSI ---
+function onCopySuccess() {
+    btnAction.classList.add('copied');
+    btnIcon.innerHTML = ICON_CHECK;
+    btnText.textContent = 'Tersalin!';
+    showToast('Nomor berhasil disalin ke clipboard');
 
-function togglePlayPause() {
-    if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        playIcon.classList.add('hidden');
-        pauseIcon.classList.remove('hidden');
-    } else {
-        backgroundMusic.pause();
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
-    }
+    setTimeout(() => {
+        btnAction.classList.remove('copied');
+        btnIcon.innerHTML = ICON_COPY;
+        btnText.textContent = 'Salin Nomor';
+    }, 2000);
 }
 
+function downloadImage(url, filename) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('Mengunduh QR...');
+}
 
-// --- INISIALISASI ---
+function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Inisialisasi Elemen
-    contentArea = document.getElementById('content-area');
-    themeToggle = document.getElementById('theme-toggle');
-    moonIcon = document.getElementById('moon-icon');
-    sunIcon = document.getElementById('sun-icon');
-    backgroundMusic = document.getElementById('background-music');
-    playPauseBtn = document.getElementById('play-pause-btn');
-    playIcon = document.getElementById('play-icon');
-    pauseIcon = document.getElementById('pause-icon');
+btnClose.onclick = closeSheet;
+overlay.onclick = closeSheet;
+document.onkeydown = (e) => { if (e.key === 'Escape') closeSheet(); };
 
-    // Setting volume ke nilai tetap 50%
-    backgroundMusic.volume = 0.5;
-
-    // Muat Tema Tersimpan
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-mode');
-        moonIcon.classList.add('hidden');
-        sunIcon.classList.remove('hidden');
-        applyLightModeStyles(); 
-    } else {
-        document.documentElement.classList.remove('light-mode');
-        moonIcon.classList.remove('hidden');
-        sunIcon.classList.add('hidden');
-        applyDarkModeStyles();
-    }
-    
-    // Inisialisasi Aksi
-    navigate('home');
-    themeToggle.addEventListener('click', toggleTheme);
-    playPauseBtn.addEventListener('click', togglePlayPause);
-});
+render();
