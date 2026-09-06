@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DeoVault — Secure Neural Gateway</title>
+    <title>DeoVault — Neural Secure Gateway</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -11,10 +11,10 @@
     <style>
         :root {
             --bg-deep: #030409;
-            --surface-glass: rgba(14, 18, 34, 0.65);
-            --surface-hover: rgba(22, 28, 52, 0.85);
-            --border-cyber: rgba(0, 242, 254, 0.15);
-            --border-active: rgba(0, 242, 254, 0.5);
+            --surface-glass: rgba(14, 18, 34, 0.7);
+            --surface-hover: rgba(22, 28, 52, 0.9);
+            --border-cyber: rgba(0, 242, 254, 0.18);
+            --border-active: rgba(0, 242, 254, 0.6);
             --neon-blue: #00f2fe;
             --neon-purple: #7f00ff;
             --neon-cyan: #00ffcc;
@@ -60,7 +60,7 @@
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 20%, rgba(127, 0, 255, 0.15) 0%, rgba(0, 242, 254, 0.05) 40%, transparent 70%);
+            background: radial-gradient(circle at 50% 20%, rgba(127, 0, 255, 0.15) 0%, rgba(0, 242, 254, 0.06) 40%, transparent 70%);
             z-index: -1;
             pointer-events: none;
             filter: blur(60px);
@@ -68,7 +68,7 @@
 
         .container {
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             position: relative;
             z-index: 1;
         }
@@ -76,7 +76,7 @@
         /* --- HEADER SECTION --- */
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .secure-badge {
@@ -93,7 +93,7 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
         }
 
@@ -119,7 +119,7 @@
             background: linear-gradient(135deg, #ffffff 30%, #00f2fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .subtitle {
@@ -127,11 +127,63 @@
             color: var(--text-muted);
         }
 
+        /* --- DUAL MENU NAV SWITCHER --- */
+        .nav-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: rgba(14, 18, 34, 0.8);
+            border: 1px solid var(--border-cyber);
+            border-radius: 16px;
+            padding: 5px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(127, 0, 255, 0.2));
+            color: var(--neon-blue);
+            border: 1px solid var(--border-active);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        /* --- TAB CONTENT PANELS --- */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* --- PAYMENT CARDS GRID --- */
         .methods-grid {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .cyber-card {
@@ -139,8 +191,8 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-cyber);
-            border-radius: 20px;
-            padding: 16px 20px;
+            border-radius: 18px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -150,41 +202,28 @@
             overflow: hidden;
         }
 
-        .cyber-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: 0.5s;
-        }
-
-        .cyber-card:hover::before {
-            left: 100%;
-        }
-
         .cyber-card:hover {
             background: var(--surface-hover);
             border-color: var(--brand-accent, var(--neon-blue));
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.15);
         }
 
         .card-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .logo-frame {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px;
+            padding: 6px;
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
@@ -196,10 +235,10 @@
         }
 
         .card-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .card-type {
@@ -211,8 +250,8 @@
         }
 
         .action-indicator {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -228,6 +267,57 @@
             color: #000;
             border-color: transparent;
             box-shadow: 0 0 12px var(--brand-accent, var(--neon-blue));
+        }
+
+        /* --- INFORMATION PANEL TAB --- */
+        .info-panel {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-cyber);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-section-title {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .info-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-main);
+        }
+
+        .info-item svg {
+            color: var(--neon-cyan);
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         /* --- NEON OVERLAY & BOTTOM SHEET --- */
@@ -278,7 +368,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .sheet-brand-info {
@@ -288,7 +378,7 @@
         }
 
         .sheet-name {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             font-family: var(--font-mono);
         }
@@ -297,7 +387,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
-            width: 36px; height: 36px;
+            width: 34px; height: 34px;
             border-radius: 50%;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
@@ -308,16 +398,15 @@
         .sheet-body {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
         }
 
         .terminal-box {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 18px;
             text-align: center;
-            position: relative;
         }
 
         .terminal-label {
@@ -330,20 +419,20 @@
         }
 
         .terminal-holder {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
         }
 
         .number-screen {
-            margin-top: 14px;
+            margin-top: 12px;
             font-family: var(--font-mono);
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--brand-accent, var(--neon-blue));
             letter-spacing: 1.5px;
-            padding: 14px;
+            padding: 12px;
             background: rgba(0, 0, 0, 0.6);
             border-radius: 12px;
             border: 1px dashed var(--border-active);
@@ -352,22 +441,22 @@
 
         .qr-screen {
             display: none;
-            margin: 14px auto 0;
-            padding: 14px;
+            margin: 12px auto 0;
+            padding: 12px;
             background: #ffffff;
-            border-radius: 16px;
+            border-radius: 14px;
             width: fit-content;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .qr-screen img {
-            width: 190px; height: 190px;
+            width: 170px; height: 170px;
             display: block;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         .instruction-text {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
             text-align: center;
             line-height: 1.5;
@@ -375,13 +464,13 @@
 
         .btn-cyber {
             width: 100%;
-            padding: 16px;
-            border-radius: 16px;
+            padding: 15px;
+            border-radius: 14px;
             border: none;
             background: var(--brand-accent, var(--neon-blue));
             color: #030409;
             font-family: var(--font-mono);
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.5px;
             cursor: pointer;
@@ -418,7 +507,7 @@
             background: rgba(0, 255, 204, 0.95);
             backdrop-filter: blur(10px);
             color: #030409;
-            padding: 12px 24px;
+            padding: 12px 22px;
             border-radius: 30px;
             font-family: var(--font-mono);
             font-size: 13px;
@@ -449,12 +538,69 @@
                 <span class="cyber-dot"></span>
                 DeoVault Secure Protocol
             </div>
-            <h1 class="title">Payment Gateway</h1>
-            <p class="subtitle">Pilih instrumen pembayaran terenkripsi Anda</p>
+            <h1 class="title">Neural Gateway</h1>
+            <p class="subtitle">Pusat transaksi & informasi terenkripsi</p>
         </div>
 
-        <div class="methods-grid" id="methods-list">
-            <!-- Di-render dinamis via JS -->
+        <!-- Dual Menu Switcher Tabs -->
+        <div class="nav-switcher">
+            <button class="nav-btn active" id="tab-payment-btn" onclick="switchTab('payment')">
+                <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                Payment
+            </button>
+            <button class="nav-btn" id="tab-info-btn" onclick="switchTab('info')">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Informasi
+            </button>
+        </div>
+
+        <!-- TAB 1: PAYMENT METHODS -->
+        <div class="tab-content active" id="tab-payment">
+            <div class="methods-grid" id="methods-list">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: INFORMATION -->
+        <div class="tab-content" id="tab-info">
+            <div class="info-panel">
+                <div>
+                    <div class="info-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Keamanan & Enkripsi
+                    </div>
+                    <p class="info-desc">Semua instruksi transfer pada DeoVault dilindungi melalui jalur proxy terenkripsi peer-to-peer. Pastikan nominal transfer sesuai dengan tagihan Anda.</p>
+                </div>
+
+                <div>
+                    <div class="info-section-title">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Prosedur Konfirmasi
+                    </div>
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Salin nomor tujuan atau simpan QRIS yang tersedia pada menu Payment.</span>
+                        </li>
+                        <li class="info-item">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Lakukan pembayaran via aplikasi m-Banking atau e-Wallet pilihan Anda.</span>
+                        </li>
+                        <li class="info-item">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Simpan bukti transaksi dan kirimkan ke admin bot / kontak resmi kami.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="info-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Bantuan Cepat
+                    </div>
+                    <p class="info-desc">Jika mengalami kendala atau salah transfer, hubungi tim support operasional melalui kanal komunikasi resmi DeoVault.</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -463,7 +609,7 @@
     <div class="sheet" id="sheet">
         <div class="sheet-header">
             <div class="sheet-brand-info">
-                <div class="logo-frame" style="width: 40px; height: 40px;">
+                <div class="logo-frame" style="width: 38px; height: 38px;">
                     <img id="sheet-logo" src="" alt="Brand Logo">
                 </div>
                 <div class="sheet-name" id="sheet-title">-</div>
@@ -509,19 +655,17 @@
                 name: "GoPay",
                 holder: "DeoVault Official",
                 number: "087864255946",
-                color: "#00f2fe",
-                // Ganti URL logo di bawah dengan link gambar PNG/SVG logo GoPay Anda jika diperlukan
-                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2300f2fe'/><circle cx='50' cy='50' r='20' fill='%23030409'/></svg>",
+                color: "#00AED6",
+                logo: "https://i.supaimg.com/4d2ebe1e-97c0-48f8-84ff-10c66427e038/ca4b80a3-cb20-4bf7-8619-2fdc8b7a09b0.jpg",
                 qr: "",
-                note: "Buka aplikasi Gojek, pilih menu Bayar/Kirim, lalu masukkan nomor tujuan di atas."
+                note: "Buka aplikasi Gojek, pilih menu Bayar/Kirim, lalu masukkan nomor telepon di atas."
             },
             {
                 name: "DANA",
                 holder: "DeoVault Official",
                 number: "087864255946",
-                color: "#0070ff",
-                // Ganti URL logo di bawah dengan link gambar PNG/SVG logo DANA Anda jika diperlukan
-                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230070ff'/><text x='50%' y='62%' font-size='28' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>DANA</text></svg>",
+                color: "#118EEA",
+                logo: "https://i.supaimg.com/4d2ebe1e-97c0-48f8-84ff-10c66427e038/e49d9c93-5ae7-412f-8549-721a654c207a.png",
                 qr: "",
                 note: "Gunakan fitur Kirim di aplikasi DANA menuju nomor telepon terenkripsi di atas."
             },
@@ -529,9 +673,8 @@
                 name: "QRIS",
                 holder: "DeoVault Official",
                 number: "",
-                color: "#ff3366",
-                // Ganti URL logo di bawah dengan link gambar PNG/SVG logo QRIS Anda jika diperlukan
-                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff3366'/><text x='50%' y='62%' font-size='24' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>QRIS</text></svg>",
+                color: "#E4002B",
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E4002B'/><text x='50%' y='62%' font-size='24' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>QRIS</text></svg>",
                 qr: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEOVAULT_SECURE_QRIS",
                 note: "Simpan atau scan QR code universal ini menggunakan m-Banking atau e-Wallet pilihan Anda."
             }
@@ -552,6 +695,26 @@
         const btnText = document.getElementById('btn-text');
         const toast = document.getElementById('toast');
 
+        // Tab Switcher Logic
+        function switchTab(tabName) {
+            const paymentBtn = document.getElementById('tab-payment-btn');
+            const infoBtn = document.getElementById('tab-info-btn');
+            const tabPayment = document.getElementById('tab-payment');
+            const tabInfo = document.getElementById('tab-info');
+
+            if (tabName === 'payment') {
+                paymentBtn.classList.add('active');
+                infoBtn.classList.remove('active');
+                tabPayment.classList.add('active');
+                tabInfo.classList.remove('active');
+            } else {
+                infoBtn.classList.add('active');
+                paymentBtn.classList.remove('active');
+                tabInfo.classList.add('active');
+                tabPayment.classList.remove('active');
+            }
+        }
+
         function renderMethods() {
             if (!listContainer) return;
             listContainer.innerHTML = '';
@@ -566,7 +729,7 @@
                 el.innerHTML = `
                     <div class="card-left">
                         <div class="logo-frame">
-                            <img src="${item.logo}" alt="${item.name} Logo">
+                            <img src="${item.logo}" alt="${item.name} Logo" onerror="this.src='https://placehold.co/50x50/111827/ffffff?text=${item.name[0]}'">
                         </div>
                         <div>
                             <div class="card-title">${item.name}</div>
@@ -585,7 +748,12 @@
             const data = METHODS[index];
             
             sheet.style.setProperty('--brand-accent', data.color);
-            document.getElementById('sheet-logo').src = data.logo;
+            const logoImg = document.getElementById('sheet-logo');
+            logoImg.src = data.logo;
+            logoImg.onerror = function() {
+                this.src = `https://placehold.co/40x40/111827/ffffff?text=${data.name[0]}`;
+            };
+
             document.getElementById('sheet-title').textContent = data.name;
             document.getElementById('sheet-holder').textContent = data.holder;
             document.getElementById('sheet-note').textContent = data.note;
