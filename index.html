@@ -547,7 +547,7 @@
             }, 2000);
         }
 
-export function downloadImage(url, filename) {
+        function downloadImage(url, filename) {
             const a = document.createElement('a');
             a.href = url;
             a.download = filename;
@@ -567,7 +567,11 @@ export function downloadImage(url, filename) {
         overlay.onclick = closeSheet;
         document.onkeydown = (e) => { if (e.key === 'Escape') closeSheet(); };
 
-        render();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', render);
+        } else {
+            render();
+        }
     </script>
 </body>
 </html>
