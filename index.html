@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DeoVault — Pembayaran</title>
+    <title>DeoVault — Secure Neural Gateway</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-main: #0a0c14;
-            --surface-card: #121524;
-            --surface-hover: #1a1e30;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-active: rgba(255, 255, 255, 0.2);
-            --text-primary: #ffffff;
-            --text-secondary: #8a92a6;
-            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --bg-deep: #030409;
+            --surface-glass: rgba(14, 18, 34, 0.65);
+            --surface-hover: rgba(22, 28, 52, 0.85);
+            --border-cyber: rgba(0, 242, 254, 0.15);
+            --border-active: rgba(0, 242, 254, 0.5);
+            --neon-blue: #00f2fe;
+            --neon-purple: #7f00ff;
+            --neon-cyan: #00ffcc;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Grotesk', sans-serif;
         }
 
         * {
@@ -28,153 +32,213 @@
         }
 
         body {
-            font-family: var(--font-family);
-            background-color: var(--bg-main);
-            color: var(--text-primary);
+            font-family: var(--font-main);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             min-height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            padding: 20px;
+            padding: 16px;
         }
 
-        .bg-glow {
+        /* --- FUTURISTIC CYBER GRID & NEON ORBS --- */
+        .cyber-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .ambient-glow {
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 30%, rgba(30, 41, 89, 0.35) 0%, rgba(10, 12, 20, 0) 70%);
+            background: radial-gradient(circle at 50% 20%, rgba(127, 0, 255, 0.15) 0%, rgba(0, 242, 254, 0.05) 40%, transparent 70%);
             z-index: -1;
             pointer-events: none;
+            filter: blur(60px);
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
         }
 
+        /* --- HEADER SECTION --- */
         .header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
-        .status-badge {
+        .secure-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            padding: 4px 12px;
-            border-radius: 20px;
+            gap: 8px;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid var(--border-cyber);
+            color: var(--neon-blue);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-family: var(--font-mono);
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
         }
 
-        .status-dot {
+        .cyber-dot {
             width: 6px; height: 6px;
-            background-color: #10b981;
+            background-color: var(--neon-cyan);
             border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-cyan);
+            animation: cyberPulse 2s infinite;
+        }
+
+        @keyframes cyberPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .title {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 30%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 6px;
         }
 
         .subtitle {
             font-size: 13px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
 
+        /* --- PAYMENT CARDS GRID --- */
         .methods-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .card {
-            background: var(--surface-card);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 16px;
+        .cyber-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-cyber);
+            border-radius: 20px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            overflow: hidden;
         }
 
-        .card:hover {
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: 0.5s;
+        }
+
+        .cyber-card:hover::before {
+            left: 100%;
+        }
+
+        .cyber-card:hover {
             background: var(--surface-hover);
-            border-color: var(--border-active);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            border-color: var(--brand-accent, var(--neon-blue));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.15);
         }
 
         .card-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
 
-        .icon-box {
-            width: 46px;
-            height: 46px;
-            background: #ffffff;
+        .logo-frame {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 8px;
             flex-shrink: 0;
-            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .icon-box img {
+        .logo-frame img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
 
         .card-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 2px;
+            color: var(--text-main);
+            margin-bottom: 3px;
         }
 
-        .card-subtitle {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .action-tag {
+        .card-type {
+            font-family: var(--font-mono);
             font-size: 11px;
-            font-weight: 700;
-            color: var(--brand-color, #fff);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 6px 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
+        .action-indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .cyber-card:hover .action-indicator {
+            background: var(--brand-accent, var(--neon-blue));
+            color: #000;
+            border-color: transparent;
+            box-shadow: 0 0 12px var(--brand-accent, var(--neon-blue));
+        }
+
+        /* --- NEON OVERLAY & BOTTOM SHEET --- */
         .overlay {
             position: fixed; inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(3, 4, 9, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
             opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.35s ease;
         }
         .overlay.active { opacity: 1; pointer-events: auto; }
 
@@ -182,13 +246,15 @@
             position: fixed;
             bottom: 0; left: 50%;
             transform: translateX(-50%) translateY(100%);
-            width: 100%; max-width: 420px;
-            background: #121420;
-            border-top: 1px solid var(--border-active);
-            border-radius: 28px 28px 0 0;
-            padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+            width: 100%; max-width: 440px;
+            background: #0b0f19;
+            border: 1px solid var(--border-active);
+            border-bottom: none;
+            border-radius: 32px 32px 0 0;
+            padding: 28px 24px calc(28px + env(safe-area-inset-bottom));
             z-index: 101;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 242, 254, 0.1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sheet.active {
             transform: translateX(-50%) translateY(0);
@@ -197,7 +263,7 @@
         @media (min-width: 520px) {
             .sheet {
                 bottom: auto; top: 50%;
-                transform: translate(-50%, -50%) scale(0.95);
+                transform: translate(-50%, -50%) scale(0.9);
                 border-radius: 28px;
                 border: 1px solid var(--border-active);
                 opacity: 0; pointer-events: none;
@@ -212,165 +278,195 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
-        .sheet-brand {
+        .sheet-brand-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .sheet-title {
-            font-size: 18px;
+        .sheet-name {
+            font-size: 20px;
             font-weight: 700;
+            font-family: var(--font-mono);
         }
 
         .btn-close {
-            background: rgba(255, 255, 255, 0.08);
-            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
-            width: 32px; height: 32px;
+            width: 36px; height: 36px;
             border-radius: 50%;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
         }
+        .btn-close:hover { background: rgba(255, 255, 255, 0.15); }
 
         .sheet-body {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
-        .detail-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
             text-align: center;
+            position: relative;
         }
 
-        .detail-label {
+        .terminal-label {
+            font-family: var(--font-mono);
             font-size: 11px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .terminal-holder {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
             margin-bottom: 4px;
         }
 
-        .detail-value {
-            font-size: 15px;
+        .number-screen {
+            margin-top: 14px;
+            font-family: var(--font-mono);
+            font-size: 24px;
             font-weight: 700;
-            color: #fff;
-        }
-
-        .number-display {
-            margin-top: 12px;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--brand-color, #fff);
-            letter-spacing: 1px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
+            color: var(--brand-accent, var(--neon-blue));
+            letter-spacing: 1.5px;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 12px;
-            border: 1px dashed rgba(255,255,255,0.15);
+            border: 1px dashed var(--border-active);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
         }
 
-        .qr-display {
+        .qr-screen {
             display: none;
-            margin: 12px auto 0;
-            padding: 12px;
-            background: #fff;
+            margin: 14px auto 0;
+            padding: 14px;
+            background: #ffffff;
             border-radius: 16px;
             width: fit-content;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
-        .qr-display img {
-            width: 180px; height: 180px;
+        .qr-screen img {
+            width: 190px; height: 190px;
             display: block;
+            border-radius: 8px;
         }
 
-        .instruction {
-            font-size: 12px;
-            color: var(--text-secondary);
+        .instruction-text {
+            font-size: 13px;
+            color: var(--text-muted);
             text-align: center;
             line-height: 1.5;
         }
 
-        .btn-primary {
+        .btn-cyber {
             width: 100%;
-            padding: 14px;
-            border-radius: 14px;
+            padding: 16px;
+            border-radius: 16px;
             border: none;
-            background: var(--brand-color, #3b82f6);
-            color: #fff;
-            font-family: var(--font-family);
+            background: var(--brand-accent, var(--neon-blue));
+            color: #030409;
+            font-family: var(--font-mono);
             font-size: 15px;
             font-weight: 700;
+            letter-spacing: 0.5px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
+            gap: 10px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
         }
 
-        .btn-primary:active {
+        .btn-cyber:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px var(--brand-accent, var(--neon-blue));
+            filter: brightness(1.1);
+        }
+
+        .btn-cyber:active {
             transform: scale(0.98);
         }
 
-        .btn-primary.copied {
-            background: #10b981 !important;
+        .btn-cyber.success {
+            background: #00ffcc !important;
+            color: #030409 !important;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.5) !important;
         }
 
-        .toast {
+        /* --- TOAST NOTIFICATION --- */
+        .cyber-toast {
             position: fixed;
-            bottom: -60px;
+            bottom: -80px;
             left: 50%;
             transform: translateX(-50%);
-            background: #10b981;
-            color: #fff;
-            padding: 10px 20px;
+            background: rgba(0, 255, 204, 0.95);
+            backdrop-filter: blur(10px);
+            color: #030409;
+            padding: 12px 24px;
             border-radius: 30px;
+            font-family: var(--font-mono);
             font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transition: bottom 0.3s ease;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.4);
+            transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .toast.show {
-            bottom: 30px;
+        .cyber-toast.show {
+            bottom: 32px;
         }
 
-        svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div class="cyber-grid"></div>
+    <div class="ambient-glow"></div>
 
     <div class="container">
         <div class="header">
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                DeoVault Official
+            <div class="secure-badge">
+                <span class="cyber-dot"></span>
+                DeoVault Secure Protocol
             </div>
-            <h1 class="title">Metode Pembayaran</h1>
-            <p class="subtitle">Pilih saluran pembayaran manual yang tersedia</p>
+            <h1 class="title">Payment Gateway</h1>
+            <p class="subtitle">Pilih instrumen pembayaran terenkripsi Anda</p>
         </div>
 
-        <div class="methods-grid" id="methods-list"></div>
+        <div class="methods-grid" id="methods-list">
+            <!-- Di-render dinamis via JS -->
+        </div>
     </div>
 
+    <!-- Interactive Neural Modal Sheet -->
     <div class="overlay" id="overlay"></div>
     <div class="sheet" id="sheet">
         <div class="sheet-header">
-            <div class="sheet-brand">
-                <div class="icon-box" style="width:36px; height:36px; padding:6px;">
-                    <img id="sheet-logo" src="" alt="Brand">
+            <div class="sheet-brand-info">
+                <div class="logo-frame" style="width: 40px; height: 40px;">
+                    <img id="sheet-logo" src="" alt="Brand Logo">
                 </div>
-                <div class="sheet-title" id="sheet-title">Nama Metode</div>
+                <div class="sheet-name" id="sheet-title">-</div>
             </div>
             <button class="btn-close" id="btn-close">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -378,64 +474,66 @@
         </div>
 
         <div class="sheet-body">
-            <div class="detail-box">
-                <div class="detail-label">Pemilik Akun</div>
-                <div class="detail-value" id="sheet-holder">-</div>
+            <div class="terminal-box">
+                <div class="terminal-label">Identitas Penerima</div>
+                <div class="terminal-holder" id="sheet-holder">-</div>
                 
-                <div class="number-display" id="sheet-number"></div>
+                <div class="number-screen" id="sheet-number"></div>
                 
-                <div class="qr-display" id="sheet-qr-box">
-                    <img id="sheet-qr-img" src="" alt="QR Code">
+                <div class="qr-screen" id="sheet-qr-box">
+                    <img id="sheet-qr-img" src="" alt="QRIS Neural Code">
                 </div>
             </div>
 
-            <p class="instruction" id="sheet-note"></p>
+            <p class="instruction-text" id="sheet-note"></p>
 
-            <button class="btn-primary" id="btn-action">
+            <button class="btn-cyber" id="btn-action">
                 <span id="btn-icon"></span>
-                <span id="btn-text">Salin Nomor</span>
+                <span id="btn-text">Salin Nomor Tujuan</span>
             </button>
         </div>
     </div>
 
-    <div class="toast" id="toast">Tersalin ke clipboard!</div>
+    <div class="cyber-toast" id="toast">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toast-msg">Berhasil disalin ke clipboard!</span>
+    </div>
 
     <script>
         /* =========================================================================
-           KONFIGURASI METODE PEMBAYARAN DEOVAULT
-           Tips: Anda bisa mengganti URL pada field 'logo' dengan link gambar Anda sendiri
-           (misal: 'https://i.imgur.com/nama-logo.png' atau simpan file logo di folder yang sama)
+           DEOVAULT CONFIGURATION MATRIX
+           Tips: Anda dapat mengganti link logo atau URL QRIS pada objek di bawah ini.
            ========================================================================= */
         const METHODS = [
             {
                 name: "GoPay",
                 holder: "DeoVault Official",
                 number: "087864255946",
-                color: "#00AED6",
-                // Ganti URL logo di bawah ini dengan link gambar logo GoPay Anda jika ada
-                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2300AED6'/><circle cx='50' cy='50' r='20' fill='%23ffffff'/></svg>",
+                color: "#00f2fe",
+                // Ganti URL logo di bawah dengan link gambar PNG/SVG logo GoPay Anda jika diperlukan
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2300f2fe'/><circle cx='50' cy='50' r='20' fill='%23030409'/></svg>",
                 qr: "",
-                note: "Buka aplikasi Gojek, lakukan transfer sesuai dengan nomor di atas."
+                note: "Buka aplikasi Gojek, pilih menu Bayar/Kirim, lalu masukkan nomor tujuan di atas."
             },
             {
                 name: "DANA",
                 holder: "DeoVault Official",
                 number: "087864255946",
-                color: "#118EEA",
-                // Ganti URL logo di bawah ini dengan link gambar logo DANA Anda jika ada
-                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23118EEA'/><text x='50%' y='62%' font-size='28' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>DANA</text></svg>",
+                color: "#0070ff",
+                // Ganti URL logo di bawah dengan link gambar PNG/SVG logo DANA Anda jika diperlukan
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230070ff'/><text x='50%' y='62%' font-size='28' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>DANA</text></svg>",
                 qr: "",
-                note: "Gunakan fitur Kirim di aplikasi DANA menuju nomor yang tertera."
+                note: "Gunakan fitur Kirim di aplikasi DANA menuju nomor telepon terenkripsi di atas."
             },
             {
                 name: "QRIS",
                 holder: "DeoVault Official",
                 number: "",
-                color: "#E4002B",
-                // Ganti URL logo di bawah ini dengan link gambar logo QRIS Anda jika ada
-                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E4002B'/><text x='50%' y='62%' font-size='24' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>QRIS</text></svg>",
-                qr: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEOVAULT_QRIS_DEMO",
-                note: "Pindai QR ini menggunakan m-Banking atau aplikasi e-Wallet pilihan Anda."
+                color: "#ff3366",
+                // Ganti URL logo di bawah dengan link gambar PNG/SVG logo QRIS Anda jika diperlukan
+                logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ff3366'/><text x='50%' y='62%' font-size='24' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>QRIS</text></svg>",
+                qr: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DEOVAULT_SECURE_QRIS",
+                note: "Simpan atau scan QR code universal ini menggunakan m-Banking atau e-Wallet pilihan Anda."
             }
         ];
         /* ========================================================================= */
@@ -443,6 +541,7 @@
         const ICON_COPY = `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
         const ICON_CHECK = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
         const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+        const ICON_CHEVRON = `<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
 
         const listContainer = document.getElementById('methods-list');
         const overlay = document.getElementById('overlay');
@@ -453,27 +552,30 @@
         const btnText = document.getElementById('btn-text');
         const toast = document.getElementById('toast');
 
-        function render() {
+        function renderMethods() {
             if (!listContainer) return;
             listContainer.innerHTML = '';
             METHODS.forEach((item, index) => {
                 const el = document.createElement('div');
-                el.className = 'card';
+                el.className = 'cyber-card';
+                el.style.setProperty('--brand-accent', item.color);
                 el.onclick = () => openSheet(index);
                 
-                const label = item.number ? 'Bayar Via No. HP' : 'Scan Kode QR';
+                const typeDesc = item.number ? 'Direct Transfer Node' : 'Universal QR Scan';
                 
                 el.innerHTML = `
                     <div class="card-left">
-                        <div class="icon-box">
-                            <img src="${item.logo}" alt="${item.name}">
+                        <div class="logo-frame">
+                            <img src="${item.logo}" alt="${item.name} Logo">
                         </div>
                         <div>
                             <div class="card-title">${item.name}</div>
-                            <div class="card-subtitle">${label}</div>
+                            <div class="card-type">${typeDesc}</div>
                         </div>
                     </div>
-                    <div class="action-tag" style="--brand-color: ${item.color}">Pilih</div>
+                    <div class="action-indicator">
+                        ${ICON_CHEVRON}
+                    </div>
                 `;
                 listContainer.appendChild(el);
             });
@@ -482,7 +584,7 @@
         function openSheet(index) {
             const data = METHODS[index];
             
-            sheet.style.setProperty('--brand-color', data.color);
+            sheet.style.setProperty('--brand-accent', data.color);
             document.getElementById('sheet-logo').src = data.logo;
             document.getElementById('sheet-title').textContent = data.name;
             document.getElementById('sheet-holder').textContent = data.holder;
@@ -492,7 +594,7 @@
             const qrDisplay = document.getElementById('sheet-qr-box');
             const qrImg = document.getElementById('sheet-qr-img');
 
-            btnAction.className = 'btn-primary';
+            btnAction.className = 'btn-cyber';
 
             if (data.number) {
                 numDisplay.style.display = 'block';
@@ -500,7 +602,7 @@
                 numDisplay.textContent = data.number;
 
                 btnIcon.innerHTML = ICON_COPY;
-                btnText.textContent = 'Salin Nomor';
+                btnText.textContent = 'Salin Nomor Tujuan';
                 btnAction.onclick = () => copyText(data.number);
             } else if (data.qr) {
                 numDisplay.style.display = 'none';
@@ -508,8 +610,8 @@
                 qrImg.src = data.qr;
 
                 btnIcon.innerHTML = ICON_DOWNLOAD;
-                btnText.textContent = 'Simpan QR';
-                btnAction.onclick = () => downloadImage(data.qr, `${data.name}_QR.png`);
+                btnText.textContent = 'Simpan QR Code';
+                btnAction.onclick = () => downloadQR(data.qr, `${data.name}_DeoVault.png`);
             }
 
             overlay.classList.add('active');
@@ -541,30 +643,30 @@
         }
 
         function onCopySuccess() {
-            btnAction.classList.add('copied');
+            btnAction.classList.add('success');
             btnIcon.innerHTML = ICON_CHECK;
             btnText.textContent = 'Tersalin!';
             showToast('Nomor berhasil disalin ke clipboard');
 
             setTimeout(() => {
-                btnAction.classList.remove('copied');
+                btnAction.classList.remove('success');
                 btnIcon.innerHTML = ICON_COPY;
-                btnText.textContent = 'Salin Nomor';
+                btnText.textContent = 'Salin Nomor Tujuan';
             }, 2000);
         }
 
-        function downloadImage(url, filename) {
+        function downloadQR(url, filename) {
             const a = document.createElement('a');
             a.href = url;
             a.download = filename;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            showToast('Mengunduh QR...');
+            showToast('Mengunduh QR Code...');
         }
 
         function showToast(msg) {
-            toast.textContent = msg;
+            document.getElementById('toast-msg').textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
@@ -573,7 +675,7 @@
         overlay.onclick = closeSheet;
         document.onkeydown = (e) => { if (e.key === 'Escape') closeSheet(); };
 
-        render();
+        renderMethods();
     </script>
 </body>
 </html>
